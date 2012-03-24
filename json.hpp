@@ -46,7 +46,6 @@ struct strict_real_policies : qi::real_policies<T>
 
 qi::real_parser< double, strict_real_policies<double> > real_;
 
-
 template<typename Iterator>
 struct json_grammar
 : qi::grammar<Iterator, object_t()>
@@ -108,7 +107,6 @@ struct json_grammar
 struct print
 : static_visitor<>
 {
-  
   template<typename T>
   void operator()(T const& v) const
   { cout<<v; }
@@ -131,28 +129,18 @@ struct print
   template<typename T>
   void operator()(map<string, T> const &m) const
   {
-    
     cout<<"{";
-    
     typename map<string,T>::const_iterator i = m.begin();
     typename map<string,T>::const_iterator j = m.begin();
     while(i != m.end()){
-
       (*this)(i->first);
-
       cout<<" : ";
-
       boost::apply_visitor(*this, i->second);
-      
       if(++i != m.end())
         cout<<",\n";
     }
-
     cout<<"}";
-    
   }
-  
-
 };
 
 
