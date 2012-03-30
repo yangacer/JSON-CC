@@ -88,7 +88,7 @@ struct json_grammar
         string_r | real_   | int64_ |
         true_    | false_ );
 
-    string_r %= lexeme['"' >> //+(qi::byte_ - '"') >>'"'];
+    string_r %= lexeme['"' >> 
       *(unesc_char |  (qi::byte_ - '"') | ("\\x" >> qi::hex) )>> '"'];
 
   }
