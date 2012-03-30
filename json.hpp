@@ -1,6 +1,6 @@
 #ifndef JSON_PARSER_HPP_
 #define JSON_PARSER_HPP_
-
+//#define BOOST_SPIRIT_UNICODE
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -23,6 +23,7 @@ using namespace std;
 
 namespace qi = boost::spirit::qi;
 namespace ascii = boost::spirit::ascii;
+//namespace unicode = boost::spirit::unicode;
 namespace phoenix = boost::phoenix;
 
 typedef mpl::vector<
@@ -68,11 +69,9 @@ struct json_grammar
       ("\\/", '/')  ("\\b", '\b')   ("\\f", '\f') 
       ("\\n", '\n') ("\\r", '\r')   ("\\t", '\t');
     
-    object_r %=
-      skip(space)[
-        '{' >>
-          pair_r >> *( qi::lit(',') >> pair_r) >>
-        '}']
+    object_r %=  skip(space)[
+      '{' >> *( pair_r >> *(',' >> pair_r) ) >>  '}'
+      ]
       ;
 
     pair_r %= skip(space)[
@@ -84,13 +83,13 @@ struct json_grammar
         var_r >> *( qi::lit(',') >> var_r ) >>
       ']'];
 
-    var_r %= 
+    var_r = 
       ( object_r | array_r | 
         string_r | real_   | int64_ |
         true_    | false_ );
 
-    string_r %= lexeme['"' >> 
-      *(unesc_char |  qi::alnum | ("\\x" >> qi::hex) )>> '"'];
+    string_r %= lexeme['"' >> //+(qi::byte_ - '"') >>'"'];
+      *(unesc_char |  (qi::byte_ - '"') | ("\\x" >> qi::hex) )>> '"'];
 
   }
 
@@ -139,7 +138,7 @@ struct print
       if(++i != m.end())
         cout<<",\n";
     }
-    cout<<"}";
+    cout<<"}\n";
   }
 };
 
