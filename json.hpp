@@ -75,7 +75,7 @@ struct json_grammar
       ;
 
     pair_r %= skip(space)[
-      string_r >> -(':' >> var_r)
+      string_r >> (':' >> var_r)
       ];
 
     array_r %= skip(space)[
@@ -87,9 +87,10 @@ struct json_grammar
       ( object_r | array_r | 
         string_r | real_   | int64_ |
         true_    | false_ );
-
+    
+    // Accept UNICODE (no verification of any UNICODE rule)
     string_r %= lexeme['"' >> 
-      *(unesc_char |  (qi::byte_ - '"') | ("\\x" >> qi::hex) )>> '"'];
+      *(unesc_char |  (qi::byte_ - '"') /*| ("\\u" >> qi::hex)*/ )>> '"'];
 
   }
 
