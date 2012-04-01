@@ -7,7 +7,6 @@
 #include <boost/fusion/include/std_pair.hpp>
 
 #include <boost/variant.hpp>
-#include <boost/variant/apply_visitor.hpp>
 #include <boost/mpl/vector.hpp>
 
 #include <vector>
@@ -57,46 +56,6 @@ struct grammar
 
   qi::symbols<char const, char const> unesc_char;
 
-};
-
-struct print
-: boost::static_visitor<>
-{
-  template<typename T>
-  void operator()(T const& v) const
-  { std::cout<<v; }
-
-  void operator()(std::string const& s) const
-  { std::cout<<"\""<<s<<"\""; }
-
-  template<typename T>
-  void operator()(std::vector<T> const &v) const
-  {
-    std::cout<<"[";
-    for(size_t i=0;i<v.size();++i){
-      boost::apply_visitor(*this, v[i]);
-      if(i + 1 != v.size())
-        std::cout<<",";
-    }
-    std::cout<<"]";
-  }
-
-  template<typename T>
-  void operator()(std::map<std::string, T> const &m) const
-  {
-    using namespace std;
-    cout<<"{";
-    typename map<string,T>::const_iterator i = m.begin();
-    typename map<string,T>::const_iterator j = m.begin();
-    while(i != m.end()){
-      (*this)(i->first);
-      cout<<" : ";
-      boost::apply_visitor(*this, i->second);
-      if(++i != m.end())
-        cout<<",\n";
-    }
-    cout<<"}\n";
-  }
 };
 
 } }// namespace yangacer::json
