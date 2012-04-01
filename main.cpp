@@ -7,10 +7,10 @@ int main(int argc, char** argv)
   using namespace yangacer;
 
   string input = argv[1];
-  json::grammar<string::iterator> grammar;
+  json::grammar<> grammar;
   json::object_t o;
 
-  string::iterator beg = input.begin(), end = input.end();
+  string::const_iterator beg = input.begin(), end = input.end();
 
   if(!json::parse(beg, end, grammar, o)){
     cerr<<"parsing failed at: "<<(beg - input.begin())<<"\n";

@@ -43,7 +43,7 @@ typedef std::vector<var_t> array_t;
 typedef std::map<std::string, var_t> object_t;
 
 
-template<typename Iterator>
+template<typename Iterator = std::string::const_iterator>
 struct grammar
 : qi::grammar<Iterator, object_t()>
 {
