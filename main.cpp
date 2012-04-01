@@ -1,20 +1,23 @@
 #include "json.hpp"
+#include <string>
 
 int main(int argc, char** argv)
 {
-  using namespace json_parser;
+  using namespace std;
+  using namespace yangacer;
+
   string input = argv[1];
-  json_grammar<string::iterator> grammar;
-  object_t o;
+  json::grammar<string::iterator> grammar;
+  json::object_t o;
 
   string::iterator beg = input.begin(), end = input.end();
 
-  if(!qi::parse(beg, end, grammar, o)){
+  if(!json::parse(beg, end, grammar, o)){
     cerr<<"parsing failed at: "<<(beg - input.begin())<<"\n";
   }else{
     cout<<o.size()<<"\n";
-    var_t v = o;
-    apply_visitor(print(), v);
+    json::var_t v = o;
+    apply_visitor(json::print(), v);
   }
   return 0;
 }
