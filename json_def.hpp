@@ -55,9 +55,11 @@ grammar<Iter>::grammar()
     ']'];
 
   var_r = 
-    ( object_r | array_r | 
+    ( 
+      true_    | false_  |
       string_r | real_   | int64_ |
-      true_    | false_ );
+      object_r | array_r 
+    );
 
   // Accept UNICODE (no verification of any UNICODE rule)
   string_r %= lexeme['"' >> 
