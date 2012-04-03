@@ -59,7 +59,7 @@ grammar<Iter>::grammar()
   var_r = 
     ( 
       true_   | false_  
-      | int_  | int64_  | real_ 
+      | (&qi::digit >> (int_  | int64_  | real_))
       | (&lit('"') >> string_r)  
       | (&lit('{') >> object_r)  
       | (&lit('[') >> array_r )
