@@ -51,7 +51,7 @@ grammar<Iter>::grammar()
 
   array_r %= skip(space)[
     '[' >>
-    var_r >> *( qi::lit(',') >> var_r ) >>
+    var_r >> *( ',' >> var_r ) >>
     ']'];
 
   var_r = 
