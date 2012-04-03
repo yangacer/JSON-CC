@@ -24,6 +24,7 @@ grammar<Iter>::grammar()
 : grammar::base_type(object_r)
 {
   using qi::char_;
+  using qi::int_;
   using qi::lexeme;
   using qi::skip;
   using qi::space;
@@ -56,9 +57,10 @@ grammar<Iter>::grammar()
 
   var_r = 
     ( 
-      true_    | false_  |
-      string_r | real_   | int64_ |
-      object_r | array_r 
+      true_     | false_  |
+      int_      | int64_  | real_ |
+      string_r  | 
+      object_r  | array_r 
     );
 
   // Accept UNICODE (no verification of any UNICODE rule)

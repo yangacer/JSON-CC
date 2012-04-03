@@ -19,6 +19,7 @@ namespace ascii = boost::spirit::ascii;
 using qi::parse;
 
 typedef boost::mpl::vector<
+  int,
   int64_t,
   std::string,
   double,
