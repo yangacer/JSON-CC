@@ -1,10 +1,7 @@
 #ifndef JSON_PARSER_HPP_
 #define JSON_PARSER_HPP_
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/fusion/include/std_pair.hpp>
+#include <boost/spirit/include/karma.hpp>
 
 #include <boost/variant.hpp>
 #include <boost/mpl/vector.hpp>
@@ -12,14 +9,12 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <iostream>
 
 namespace yangacer {
 namespace json {
 
 namespace qi = boost::spirit::qi;
 namespace ascii = boost::spirit::ascii;
-namespace phoenix = boost::phoenix;
 
 using qi::parse;
 
@@ -57,6 +52,10 @@ struct grammar
   qi::symbols<char const, char const> unesc_char;
 
 };
+
+//template<typename Iterator>
+//struct gen
+//: karma::
 
 } }// namespace yangacer::json
 

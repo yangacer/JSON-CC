@@ -14,7 +14,7 @@ int main(int argc, char** argv)
   json::grammar<>::iterator_type beg = input.begin(), end = input.end();
 
   if(!json::parse(beg, end, grammar, o)){
-    cerr<<"parsing failed at: "<<(beg - input.begin())<<"\n";
+    cerr<<"Parsing failed at: "<<(beg - input.begin())<<"\n";
   }else{
     cout<<o.size()<<"\n";
     json::var_t v = o;

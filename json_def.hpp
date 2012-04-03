@@ -2,9 +2,15 @@
 #define JSON_DEF_HPP_
 
 #include "json.hpp"
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/include/phoenix_object.hpp>
+#include <boost/fusion/include/std_pair.hpp>
 
 namespace yangacer {
 namespace json {
+
+namespace phoenix = boost::phoenix;
 
 template <typename T>
 struct strict_real_policies 
