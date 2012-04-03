@@ -59,7 +59,7 @@ grammar<Iter>::grammar()
   var_r = 
     ( 
       true_   | false_  
-      | (&qi::digit >> (int_  | int64_  | real_))
+      | int_  | int64_  | real_
       | (&lit('"') >> string_r)  
       | (&lit('{') >> object_r)  
       | (&lit('[') >> array_r )
@@ -67,7 +67,7 @@ grammar<Iter>::grammar()
 
   // Accept UNICODE (no verification of any UNICODE rule)
   string_r %= lexeme['"' >> 
-    *(unesc_char |  (qi::byte_ - '"') /*| ("\\u" >> qi::hex)*/ )>> '"'];
+    *( (&lit('\\') >> unesc_char) |  (qi::byte_ - '"') /*| ("\\u" >> qi::hex)*/ )>> '"'];
 
 }
 
