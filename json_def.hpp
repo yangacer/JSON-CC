@@ -30,8 +30,7 @@ grammar<Iter>::grammar()
   using qi::skip;
   using qi::space;
   using qi::double_;
-  using qi::true_;
-  using qi::false_;
+  using qi::bool_;
   using namespace qi::labels;
 
   typedef qi::int_parser< boost::int64_t > int64_parser;
@@ -58,8 +57,7 @@ grammar<Iter>::grammar()
 
   var_r = 
     ( 
-      true_   | false_  
-      | int_  | int64_  | real_
+      bool_  | int_  | int64_  | real_
       | (&lit('"') >> string_r)  
       | (&lit('{') >> object_r)  
       | (&lit('[') >> array_r )
