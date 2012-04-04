@@ -6,7 +6,7 @@
 #include <boost/variant.hpp>
 #include <boost/mpl/vector.hpp>
 
-#include <vector>
+#include <deque>
 #include <map>
 #include <string>
 
@@ -24,7 +24,7 @@ typedef boost::mpl::vector<
   std::string,
   double,
   bool,
-  std::vector<boost::recursive_variant_>,
+  std::deque<boost::recursive_variant_>,
   std::map<std::string, boost::recursive_variant_ >
   >::type types;
 
@@ -32,7 +32,7 @@ typedef boost::mpl::vector<
 typedef boost::make_recursive_variant_over<types>::type var_t;
 
 // array type
-typedef std::vector<var_t> array_t;
+typedef std::deque<var_t> array_t;
 
 // object type
 typedef std::map<std::string, var_t> object_t;

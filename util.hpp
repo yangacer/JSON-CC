@@ -19,7 +19,7 @@ struct print
   { (*os_)<<"\""<<s<<"\""; }
 
   template<typename T>
-  void operator()(std::vector<T> const &v) const
+  void operator()(std::deque<T> const &v) const
   {
     (*os_)<<"[";
     for(size_t i=0;i<v.size();++i){
