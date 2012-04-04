@@ -56,20 +56,17 @@ grammar<Iter>::grammar()
     ']'];
 
   var_r = 
-    ( 
-      bool_  | int_  | int64_  | real_
-      | (&lit('"') >> string_r)  
-      | (&lit('{') >> object_r)  
-      | (&lit('[') >> array_r )
-    );
+    bool_  | int_  | int64_  | real_
+    | (&lit('"') >> string_r)  
+    | (&lit('{') >> object_r)  
+    | (&lit('[') >> array_r )
+    ;
 
   // Accept UNICODE (no verification of any UNICODE rule)
   string_r %= lexeme['"' >> 
-    *( (&lit('\\') >> unesc_char) |  (qi::byte_ - '"') /*| ("\\u" >> qi::hex)*/ )>> '"'];
+    *( (&lit('\\') >> unesc_char) |  (qi::byte_ - '"')  )>> '"'];
 
 }
-
-
 
 }} // namespace yangacer::json
 
