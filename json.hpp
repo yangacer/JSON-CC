@@ -19,13 +19,13 @@ namespace ascii = boost::spirit::ascii;
 using qi::parse;
 
 typedef boost::mpl::vector<
+  std::deque<boost::recursive_variant_>,
+  std::map<std::string, boost::recursive_variant_ >,
   int,
   int64_t,
   std::string,
   double,
-  bool,
-  std::deque<boost::recursive_variant_>,
-  std::map<std::string, boost::recursive_variant_ >
+  bool
   >::type types;
 
 // variable type
