@@ -2,9 +2,32 @@
 #define JSON_UTIL_HPP_
 
 #include <boost/variant/apply_visitor.hpp>
+#include <boost/spirit/include/karma.hpp>
+#include <boost/spirit/include/support_ostream_iterator.hpp>
 
 namespace yangacer {
 namespace json {
+namespace karma = boost::spirit::karma;
+
+template <typename OutputIterator>
+struct escaped_string
+  : karma::grammar<OutputIterator, std::string()>
+{
+    escaped_string()
+      : escaped_string::base_type(esc_str)
+    {
+        esc_char.add('\b', "\\b")('\f', "\\f")('\n', "\\n")
+                    ('\r', "\\r")('\t', "\\t")('\\', "\\\\")
+                    ('\'', "\\\'")('\"', "\\\"")('/',"\\/")
+            ;
+        esc_str =   karma::lit("\"")
+                << *(esc_char | karma::byte_)
+                <<  karma::lit("\"")
+            ;
+    }
+    karma::rule<OutputIterator, std::string()> esc_str;
+    karma::symbols<char, char const*> esc_char;
+};
 
 struct print
 : boost::static_visitor<>
@@ -14,9 +37,19 @@ struct print
   template<typename T>
   void operator()(T const& v) const
   { (*os_)<<v; }
+  
+  void operator()(bool const b) const
+  {
+    b?(*os_)<<"true":(*os_)<<"false";
+  }
 
   void operator()(std::string const& s) const
-  { (*os_)<<"\""<<s<<"\""; }
+  { 
+    escaped_string<boost::spirit::ostream_iterator> str_gen;
+    boost::spirit::ostream_iterator sink(*os_);
+    karma::generate(sink, str_gen, s);
+    //(*os_)<<"\""<<s<<"\""; 
+  }
 
   template<typename T>
   void operator()(std::deque<T> const &v) const

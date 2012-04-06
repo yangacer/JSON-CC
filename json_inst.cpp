@@ -5,6 +5,7 @@ namespace json{
 
 template grammar<std::string::const_iterator>::grammar();
 template grammar<char const*>::grammar();
+template grammar<istream_iterator>::grammar();
 
 }} // namespace yangacer::json
 

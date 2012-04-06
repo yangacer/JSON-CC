@@ -5,7 +5,9 @@
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
+#include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/fusion/include/std_pair.hpp>
+#include <iostream>
 
 namespace yangacer {
 namespace json {
@@ -21,7 +23,7 @@ struct strict_real_policies
 
 template<typename Iter>
 grammar<Iter>::grammar() 
-: grammar::base_type(object_r)
+: grammar::base_type(object_r, "object")
 {
   using qi::char_;
   using qi::lit;
@@ -31,6 +33,11 @@ grammar<Iter>::grammar()
   using qi::space;
   using qi::double_;
   using qi::bool_;
+  using phoenix::construct;
+  using phoenix::val;
+  //using phoenix::new_;
+  //using phoenix::begin;
+  //using phoenix::end;
   using namespace qi::labels;
 
   typedef qi::int_parser< boost::int64_t > int64_parser;
@@ -42,30 +49,56 @@ grammar<Iter>::grammar()
     ("\\n", '\n') ("\\r", '\r')   ("\\t", '\t');
 
   object_r %=  skip(space)[
-    '{' >> *( pair_r >> *(',' >> pair_r) ) >>  '}'
+    '{' > *( pair_r >> *(',' >> pair_r) ) >  '}'
     ]
     ;
 
   pair_r %= skip(space)[
-    string_r >> (':' >> var_r)
+    string_r > (':' > var_r)
     ];
 
   array_r %= skip(space)[
-    '[' >>
-    var_r >> *( ',' >> var_r ) >>
+    '[' >
+    var_r > *( ',' > var_r ) >>
     ']'];
 
   var_r = 
     bool_  | int_  | int64_  | real_
-    | (&lit('"') >> string_r)  
-    | (&lit('{') >> object_r)  
-    | (&lit('[') >> array_r )
+    | (&lit('"') > string_r)  
+    | (&lit('{') > object_r)  
+    | (&lit('[') > array_r )
     ;
 
   // Accept UNICODE (no verification of any UNICODE rule)
-  string_r %= lexeme['"' >> 
-    *( (&lit('\\') >> unesc_char) |  (qi::byte_ - '"')  )>> '"'];
-
+  string_r %= lexeme['"' >
+    *( (&lit('\\') >> unesc_char) |  (qi::byte_ - '"')  ) > '"'];
+  
+  /*
+  string_ptr_r = lexeme['"' >> 
+    *( qi::byte_ - '"' )>> '"']
+    [_val = construct<boost::shared_ptr<std::string> >(
+        new_<std::string>(
+          &*begin(_1), &*end(_1)
+        )
+      )
+    ]
+    ;
+  */
+  object_r.name("object");
+  pair_r.name("pair");
+  array_r.name("array");
+  var_r.name("var");
+  string_r.name("string");
+  
+  qi::on_error<qi::fail>
+  ( object_r ,
+    std::cout<<
+      val("Error! Expecting ")<<
+      _4<<
+      val(" here: ")<<
+      construct<std::string>(_3,_2)<<
+      std::endl
+  );
 }
 
 }} // namespace yangacer::json
