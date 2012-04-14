@@ -27,7 +27,6 @@ typedef boost::mpl::vector<
   int64_t,
   double,
   std::string,
-  //boost::shared_ptr<std::string>,  
   std::deque<boost::recursive_variant_>,
   std::map<std::string, boost::recursive_variant_ >
   >::type types;
@@ -52,16 +51,11 @@ struct grammar
   qi::rule<Iterator, array_t()> array_r;
   qi::rule<Iterator, std::pair<object_t::key_type, object_t::mapped_type>() > pair_r;
   qi::rule<Iterator, std::string()> string_r;
-  //qi::rule<Iterator, boost::shared_ptr<std::string>()> string_ptr_r;
   qi::rule<Iterator, var_t()> var_r;
 
   qi::symbols<char const, char const> unesc_char;
 
 };
-
-//template<typename Iterator>
-//struct gen
-//: karma::
 
 } }// namespace yangacer::json
 

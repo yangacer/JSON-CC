@@ -73,17 +73,6 @@ grammar<Iter>::grammar()
   string_r %= lexeme['"' >
     *( (&lit('\\') >> unesc_char) |  (qi::byte_ - '"')  ) > '"'];
   
-  /*
-  string_ptr_r = lexeme['"' >> 
-    *( qi::byte_ - '"' )>> '"']
-    [_val = construct<boost::shared_ptr<std::string> >(
-        new_<std::string>(
-          &*begin(_1), &*end(_1)
-        )
-      )
-    ]
-    ;
-  */
   object_r.name("object");
   pair_r.name("pair");
   array_r.name("array");

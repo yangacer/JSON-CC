@@ -1,0 +1,55 @@
+<link href="markdown.css" rel="stylesheet" type="text/css"><link/>
+#Features:
+
+1. JSON is modeled by boost::variant and is exposed directly. 
+
+2. Use boost::spirit::qi to parse data.
+
+3. A library provides pre-built grammar of frequently used char iterator types.
+
+4. A simple json::print visitor can be used to print a JSON variant.
+
+5. Support ASCII and UNICODE (other than that will not work). 
+
+6. Support escaped string.
+
+#yangacer::json v.s. JSON SPIRIT
+
+[JSON SPIRIT](http://www.codeproject.com/Articles/20027/JSON-Spirit-A-C-JSON-Parser-Generator-Implemented) 
+is a famous JSON parser that has some similar implementation with
+yangacer::json.
+
+1. json\_spirit wraps boost::variant as an internal structure and dose not
+   allow access to a terminal value. e.g. numeric and string. Either
+   boost::apply\_visitor can be used.
+
+2. json\_spirit can parse data a little bit faster. Hereby are some
+   benchmark:
+  
+  <pre>
+    input(mb) yangacer(sec) json_spirit
+    5.6       0.52          0.44
+    11        1.02          0.88
+    16        1.54          1.30
+    21        2.03          1.77
+    37        3.55          3.14
+  </pre>
+
+#Tip
+
+- Boost parsing speed with premodel
+
+  If you have knowledge of what fields and their type will be constructed
+  before parsing. You can premodel it. e.g.
+
+  <pre>
+    // Data to be parsed
+    // {"data":[1,2], "name":"acer", "ref":{}}
+
+    using namespace yangacer;
+    json::object_t obj;
+    obj["data"] = json::array_t();
+    obj["name"] = std::string();
+    obj["ref"] = json::object_t();
+  </pre>
+
