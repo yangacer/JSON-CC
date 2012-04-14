@@ -31,7 +31,7 @@ yangacer::json.
 
 1. json\_spirit wraps boost::variant as an internal structure and dose not
    allow access to a terminal value. e.g. numeric and string. Either
-   boost::apply\_visitor can be used.
+   boost::apply\_visitor can not be used.
 
 2. json\_spirit can parse data a little bit faster. Hereby are some
    benchmark:

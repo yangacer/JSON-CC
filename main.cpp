@@ -22,8 +22,6 @@ int main(int argc, char** argv)
     cerr<<"Parsing failed\n";
   }else{
     cout<<o.size()<<"\n";
-    //json::var_t v = o;
-    //apply_visitor(json::print(cout), v);
     json::print prt(cout);
     prt(o);
   }
