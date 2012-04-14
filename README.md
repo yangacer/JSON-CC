@@ -1,5 +1,15 @@
 <link href="markdown.css" rel="stylesheet" type="text/css"><link/>
-#Features:
+#Qickstart
+
+1. Build and install library
+
+>cd YA-JSON;mkdir build;cd build;cmake ..;make install
+
+2. Read main.cpp to see how to use parser.
+
+3. Read util.\* to see how a visitor looked like.
+
+#Features
 
 1. JSON is modeled by boost::variant and is exposed directly. 
 
