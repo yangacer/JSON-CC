@@ -52,7 +52,6 @@ yangacer::json.
   If you have knowledge of what fields and their type will be constructed
   before parsing. You can premodel it. e.g.
 
-  <pre>
     // Data to be parsed
     // {"data":[1,2], "name":"acer", "ref":{}}
 
@@ -61,5 +60,4 @@ yangacer::json.
     obj["data"] = json::array_t();
     obj["name"] = std::string();
     obj["ref"] = json::object_t();
-  </pre>
 
