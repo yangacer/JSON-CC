@@ -5,13 +5,15 @@
 
 >cd YA-JSON;mkdir build;cd build;cmake ..;make install
 
-2. Read main.cpp to see how to use parser.
+2. Read main.cpp to see how to use parser and print parsed structures.
 
 3. Read util.\* to see how a visitor looked like.
 
 #Features
 
-##1. A JSON object is modeled by std::map&lt;std::string, boost::variant&gt;. 
+##1. A C++ JSON object 
+
+A JSON object is modeled by std::map&lt;std::string, boost::variant&gt;. 
 
     using namespace yangacer;
     json::object_t obj;
@@ -21,19 +23,19 @@
     for(iter i = obj["arr"].begin(); i != obj["arr"].end();++i)
       // process elements in array
 
-##2. Use boost::spirit::qi to parse data.
+##2. libjson.so: Pre-built grammar of frequently used iterator types
 
-##3. A library provides pre-built grammar of frequently used char iterator types. 
+The types are std::string::const\_iterator, char const\*, and boost::spirit::istream\_iterator.
+Note that the boost::spirit::istream\_iterator is an adaptor that allow a parser to
+read input from std::istream class. In case of using theose types, compilation time of user code can be
+reduced largely via linking the pre-built library.
 
-The types are std::string::const\_iterator, char const\*, and boost::spirit::istream\_iterator. 
-The boost::spirit::istream\_iterator is an adaptor that allow a parser to
-read input from std::istream class.
 
-##4. A simple json::print visitor can be used to print a JSON variant.
+##4. Processing of Characters 
+  
+  - Support ASCII and UNICODE (other than that will not work). 
 
-##5. Support ASCII and UNICODE (other than that will not work). 
-
-##6. Support escaped string.
+  - Support escaped string.
 
 #yangacer::json v.s. JSON SPIRIT
 
@@ -41,11 +43,11 @@ read input from std::istream class.
 is a famous JSON parser that has some similar implementation with
 yangacer::json.
 
-##1. json\_spirit wraps boost::variant as an internal structure and dose not
+1. json\_spirit wraps boost::variant as an internal structure and dose not
    allow access to a terminal value. e.g. numeric and string. Either
    boost::apply\_visitor can not be used.
 
-##2. json\_spirit can parse data a little bit faster. Hereby are some
+2. json\_spirit can parse data a little bit faster. Hereby are some
    benchmarks:
   
   <pre>
