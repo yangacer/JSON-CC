@@ -1,9 +1,13 @@
 <link href="markdown.css" rel="stylesheet" type="text/css"><link/>
+
+Following description uses yangacer::json and JSON-CC to refer this library
+interchangeably.
+
 #Qickstart
 
 1. Build and install library
 
->cd YA-JSON;mkdir build;cd build;cmake ..;make install
+>cd JSON-CC;mkdir build;cd build;cmake ..;make install
 
 2. Read main.cpp to see how to use parser and print parsed structures.
 
@@ -11,7 +15,7 @@
 
 #Features
 
-##1. A C++ JSON object 
+##A C++ JSON object 
 
 A JSON object is modeled by std::map&lt;std::string, boost::variant&gt;. 
 
@@ -23,21 +27,32 @@ A JSON object is modeled by std::map&lt;std::string, boost::variant&gt;.
     for(iter i = obj["arr"].begin(); i != obj["arr"].end();++i)
       // process elements in array
 
-##2. libjson.so: Pre-built grammar of frequently used iterator types
+##libjson.so: Pre-built grammar of frequently used iterator types
 
 The types are std::string::const\_iterator, char const\*, and boost::spirit::istream\_iterator.
 Note that the boost::spirit::istream\_iterator is an adaptor that allow a parser to
 read input from std::istream class. In case of using theose types, compilation time of user code can be
 reduced largely via linking the pre-built library.
 
+If you require to use different iterator types, you can simply include both
+"json.hpp" and "json\_def.hpp" in your code and define a grammar of the
+iterator type. e.g.
 
-##4. Processing of Characters 
+    #include "json.hpp"
+    #include "json_def.hpp"
+
+    // ...
+    using namespace yangacer;
+    json::grammar<my_iterator_type> grammar;
+    json::phrase_parse(...);
+
+##Processing of Characters 
   
   - Support ASCII and UNICODE (other than that will not work). 
 
   - Support escaped string.
 
-#yangacer::json v.s. JSON SPIRIT
+#JSON-CC v.s. JSON SPIRIT
 
 [JSON SPIRIT](http://www.codeproject.com/Articles/20027/JSON-Spirit-A-C-JSON-Parser-Generator-Implemented) 
 is a famous JSON parser that has some similar implementation with
