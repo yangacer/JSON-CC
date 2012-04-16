@@ -11,17 +11,29 @@
 
 #Features
 
-1. JSON is modeled by boost::variant and is exposed directly. 
+##1. A JSON object is modeled by std::map&lt;std::string, boost::variant&gt;. 
 
-2. Use boost::spirit::qi to parse data.
+    using namespace yangacer;
+    json::object_t obj;
+    obj["str"] = "string"; 
+    obj["arr"] = json::array_t(3);
+    typedef json::array_t::iterator iter;
+    for(iter i = obj["arr"].begin(); i != obj["arr"].end();++i)
+      // process elements in array
 
-3. A library provides pre-built grammar of frequently used char iterator types.
+##2. Use boost::spirit::qi to parse data.
 
-4. A simple json::print visitor can be used to print a JSON variant.
+##3. A library provides pre-built grammar of frequently used char iterator types. 
 
-5. Support ASCII and UNICODE (other than that will not work). 
+The types are std::string::const\_iterator, char const\*, and boost::spirit::istream\_iterator. 
+The boost::spirit::istream\_iterator is an adaptor that allow a parser to
+read input from std::istream class.
 
-6. Support escaped string.
+##4. A simple json::print visitor can be used to print a JSON variant.
+
+##5. Support ASCII and UNICODE (other than that will not work). 
+
+##6. Support escaped string.
 
 #yangacer::json v.s. JSON SPIRIT
 
@@ -29,12 +41,12 @@
 is a famous JSON parser that has some similar implementation with
 yangacer::json.
 
-1. json\_spirit wraps boost::variant as an internal structure and dose not
+##1. json\_spirit wraps boost::variant as an internal structure and dose not
    allow access to a terminal value. e.g. numeric and string. Either
    boost::apply\_visitor can not be used.
 
-2. json\_spirit can parse data a little bit faster. Hereby are some
-   benchmark:
+##2. json\_spirit can parse data a little bit faster. Hereby are some
+   benchmarks:
   
   <pre>
     input(mb) yangacer(sec) json_spirit
@@ -47,7 +59,7 @@ yangacer::json.
 
 #Tip
 
-- Boost parsing speed with premodel
+##Boost parsing speed with premodel
 
   If you have knowledge of what fields and their type will be constructed
   before parsing. You can premodel it. e.g.

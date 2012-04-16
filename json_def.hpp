@@ -35,9 +35,6 @@ grammar<Iter>::grammar()
   using qi::bool_;
   using phoenix::construct;
   using phoenix::val;
-  //using phoenix::new_;
-  //using phoenix::begin;
-  //using phoenix::end;
   using namespace qi::labels;
 
   typedef qi::int_parser< boost::int64_t > int64_parser;
