@@ -25,6 +25,9 @@ escaped_string<boost::spirit::ostream_iterator> print::str_gen;
 
 // print visitor impl -----------------
 
+void print::operator()(void*) const
+{ (*os_)<<"null"; }
+
 void print::operator()(bool const b) const
 {
   b?(*os_)<<"true":(*os_)<<"false";

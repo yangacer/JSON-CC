@@ -21,6 +21,7 @@ struct strict_real_policies
     static bool const expect_dot = true;
 };
 
+
 template<typename Iter>
 grammar<Iter>::grammar() 
 : grammar::base_type(object_r, "object")
@@ -37,9 +38,9 @@ grammar<Iter>::grammar()
   using phoenix::val;
   using namespace qi::labels;
 
+  qi::real_parser< double, strict_real_policies<double> > real_;
   typedef qi::int_parser< boost::int64_t > int64_parser;
   int64_parser int64_;
-  qi::real_parser< double, strict_real_policies<double> > real_;
 
   unesc_char.add  ("\\\"", '\"')  ("\\\\", '\\')
     ("\\/", '/')  ("\\b", '\b')   ("\\f", '\f') 
@@ -60,7 +61,9 @@ grammar<Iter>::grammar()
     ']'];
 
   var_r = 
-    bool_  | int_  | int64_  | real_
+    lit("null") [_val = NULL]
+    | bool_  
+    | real_ | int_ | int64_ 
     | (&lit('"') > string_r)  
     | (&lit('{') > object_r)  
     | (&lit('[') > array_r )

@@ -27,6 +27,8 @@ struct print
   void operator()(T const& v) const
   { (*os_)<<v; }
   
+  void operator()(void*) const;
+
   void operator()(bool const b) const;
 
   void operator()(std::string const& s) const;
