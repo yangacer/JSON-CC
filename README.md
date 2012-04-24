@@ -5,13 +5,42 @@ interchangeably.
 
 #Qickstart
 
-1. Build and install library
+1. Build and install library <p/>
 
->cd JSON-CC;mkdir build;cd build;cmake ..;make install
+    cd JSON-CC;mkdir build;cd build;cmake ..;make install
 
-2. Read main.cpp to see how to use parser and print parsed structures.
+2. A hello world example: <p/>
 
-3. Read util.\* to see how a visitor looked like.
+    #include "json.hpp"
+    #include "util.hpp"
+    #include <string>
+    #include <iostream>
+
+    int main(int argc, char** argv)
+    {
+      using namespace std;
+      using namespace yangacer;
+      
+      string input = "{\"data\":\"Hello world!\"}";
+      json::grammar<> grammar; 
+      json::object_t o;
+      string::iterator 
+        beg = input.begin(),
+        end = input.end();
+
+      // or use json::parse(beg, end, grammar, o) to parse line-by-line
+      if(!json::phrase_parse(beg, end, grammar, json::space, o)){ 
+        cerr<<"Parsing failed\n";
+      }else{
+        cout<<"Parsing success\n";
+        json::print prt(cout);
+        prt(o);
+      }
+      return 0;
+    }    
+
+3. Read util.\* to see how to write a visitor for reading/processing a JSON
+   object.
 
 #Features
 
