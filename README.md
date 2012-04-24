@@ -55,7 +55,8 @@ A JSON object is modeled by std::map&lt;std::string, json::var\_t&gt;.
     obj["str"] = "string"; 
     obj["arr"] = json::array_t(3);
     typedef json::array_t::iterator iter;
-    for(iter i = obj["arr"].begin(); i != obj["arr"].end();++i)
+    json::array_t &arr = boost::get<json::array_t>(obj["arr"]);
+    for(iter i = arr.begin(); i != arr.end();++i)
       // process elements in array
 
 An instance of var\_t can be one of following types
