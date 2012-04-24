@@ -9,9 +9,9 @@ interchangeably.
 
     cd JSON-CC;mkdir build;cd build;cmake ..;make install
 
-2. A hello world example: <p/>
+2. A hello world example:
 
-<pre>
+```C++
     #include "json.hpp"
     #include "util.hpp"
     #include &lt;string>
@@ -40,8 +40,7 @@ interchangeably.
       }
       return 0;
     }    
-</pre>
-
+```
 3. Read util.\* to see how to write a visitor for reading/processing a JSON
    object.
 
