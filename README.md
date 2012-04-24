@@ -12,34 +12,34 @@ interchangeably.
 2. A hello world example:
 
 ```C++
-    #include "json.hpp"
-    #include "util.hpp"
-    #include <string>
-    #include <iostream>
+  #include "json.hpp"
+  #include "util.hpp"
+  #include <string>
+  #include <iostream>
 
-    int 
-    main(int argc, char** argv)
-    {
-      using namespace std;
-      using namespace yangacer;
-      
-      string input = "{\"data\":\"Hello world!\"}";
-      json::grammar<> grammar; 
-      json::object_t o;
-      string::iterator 
-        beg = input.begin(),
-        end = input.end();
+  int 
+  main(int argc, char** argv)
+  {
+    using namespace std;
+    using namespace yangacer;
+    
+    string input = "{\"data\":\"Hello world!\"}";
+    json::grammar<> grammar; 
+    json::object_t o;
+    string::iterator 
+      beg = input.begin(),
+      end = input.end();
 
-      // or use json::parse(beg, end, grammar, o) to parse line-by-line
-      if(!json::phrase_parse(beg, end, grammar, json::space, o)){ 
-        cerr<<"Parsing failed\n";
-      }else{
-        cout<<"Parsing success\n";
-        json::print prt(cout);
-        prt(o);
-      }
-      return 0;
-    }    
+    // or use json::parse(beg, end, grammar, o) to parse line-by-line
+    if(!json::phrase_parse(beg, end, grammar, json::space, o)){ 
+      cerr<<"Parsing failed\n";
+    }else{
+      cout<<"Parsing success\n";
+      json::print prt(cout);
+      prt(o);
+    }
+    return 0;
+  }    
 ```
 3. Read util.\* to see how to write a visitor for reading/processing a JSON
    object.
@@ -50,14 +50,16 @@ interchangeably.
 
 A JSON object is modeled by std::map&lt;std::string, json::var\_t&gt;. 
 
-    using namespace yangacer;
-    json::object_t obj;
-    obj["str"] = "string"; 
-    obj["arr"] = json::array_t(3);
-    typedef json::array_t::iterator iter;
-    json::array_t &arr = boost::get<json::array_t>(obj["arr"]);
-    for(iter i = arr.begin(); i != arr.end();++i)
-      // process elements in array
+```C++
+  using namespace yangacer;
+  json::object_t obj;
+  obj["str"] = "string"; 
+  obj["arr"] = json::array_t(3);
+  typedef json::array_t::iterator iter;
+  json::array_t &arr = boost::get<json::array_t>(obj["arr"]);
+  for(iter i = arr.begin(); i != arr.end();++i)
+    // process elements in array
+```
 
 An instance of var\_t can be one of following types
 
@@ -79,6 +81,7 @@ If you require to use different iterator types, you can simply include both
 "json.hpp" and "json\_def.hpp" in your code and define a grammar of the
 iterator type. e.g.
 
+```C++
     #include "json.hpp"
     #include "json_def.hpp"
 
@@ -86,6 +89,7 @@ iterator type. e.g.
     using namespace yangacer;
     json::grammar<my_iterator_type> grammar;
     json::phrase_parse(...);
+```
 
 ##Processing of Characters 
   
@@ -122,6 +126,7 @@ yangacer::json.
   If you have knowledge of what fields and their type will be constructed
   before parsing. You can premodel it. e.g.
 
+```C++
     // Data to be parsed
     // {"data":[1,2], "name":"acer", "ref":{}}
 
@@ -130,4 +135,5 @@ yangacer::json.
     obj["data"] = json::array_t();
     obj["name"] = std::string();
     obj["ref"] = json::object_t();
+```
 
