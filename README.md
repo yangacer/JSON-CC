@@ -11,10 +11,10 @@ interchangeably.
 
 2. A hello world example: <p/>
 
-    #include "json.hpp"
-    #include "util.hpp"
-    #include <string>
-    #include <iostream>
+    \#include "json.hpp"
+    \#include "util.hpp"
+    \#include &lt;string>
+    \#include &lt;iostream>
 
     int main(int argc, char** argv)
     {
