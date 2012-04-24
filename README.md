@@ -17,7 +17,7 @@ interchangeably.
 
 ##A C++ JSON object 
 
-A JSON object is modeled by std::map&lt;std::string, boost::variant&gt;. 
+A JSON object is modeled by std::map&lt;std::string, json::var\_t&gt;. 
 
     using namespace yangacer;
     json::object_t obj;
@@ -26,6 +26,15 @@ A JSON object is modeled by std::map&lt;std::string, boost::variant&gt;.
     typedef json::array_t::iterator iter;
     for(iter i = obj["arr"].begin(); i != obj["arr"].end();++i)
       // process elements in array
+
+An instance of var\_t can be one of following types
+
+    int, int64_t, double, string, null
+    array_t, object_t
+
+The var\_t is actually a boost::variant class, to get familiar with using it,
+please check the [boost::variant
+document](http://www.boost.org/doc/libs/1_49_0/doc/html/variant/tutorial.html)
 
 ##libjson.so: Pre-built grammar of frequently used iterator types
 
