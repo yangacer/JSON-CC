@@ -11,12 +11,14 @@ interchangeably.
 
 2. A hello world example: <p/>
 
-    \#include "json.hpp"
-    \#include "util.hpp"
-    \#include &lt;string>
-    \#include &lt;iostream>
+<pre>
+    #include "json.hpp"
+    #include "util.hpp"
+    #include &lt;string>
+    #include &lt;iostream>
 
-    int main(int argc, char** argv)
+    int 
+    main(int argc, char** argv)
     {
       using namespace std;
       using namespace yangacer;
@@ -38,6 +40,7 @@ interchangeably.
       }
       return 0;
     }    
+</pre>
 
 3. Read util.\* to see how to write a visitor for reading/processing a JSON
    object.
