@@ -4,7 +4,7 @@ project (json)
 include ( rpath.cmake )
 include_directories ( /usr/local/include )
 
-add_library ( json SHARED json_inst.cpp util.cpp)
+add_library ( json SHARED parser_inst.cpp util.cpp)
 
 add_executable ( test main.cpp )
 target_link_libraries ( test json )

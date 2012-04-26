@@ -1,7 +1,7 @@
 #ifndef JSON_DEF_HPP_
 #define JSON_DEF_HPP_
 
-#include "json.hpp"
+#include "parser.hpp"
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>

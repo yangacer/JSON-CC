@@ -1,9 +1,10 @@
 #ifndef JSON_UTIL_HPP_
 #define JSON_UTIL_HPP_
 
-#include "json.hpp"
+#include "variant.hpp"
 #include <boost/variant/static_visitor.hpp>
 #include <boost/spirit/include/karma.hpp>
+#include <boost/spirit/include/support_istream_iterator.hpp>
 
 namespace yangacer {
 namespace json {

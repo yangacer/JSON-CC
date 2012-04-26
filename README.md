@@ -12,8 +12,7 @@ interchangeably.
 2. A hello world example:
 
 ```C++
-  #include "json.hpp"
-  #include "util.hpp"
+  #include "json/json.hpp"
   #include <string>
   #include <iostream>
 
@@ -46,7 +45,7 @@ interchangeably.
 
 #Features
 
-##A C++ JSON object 
+##A C++ JSON object
 
 A JSON object is modeled by std::map&lt;std::string, json::var\_t&gt;. 
 
@@ -66,9 +65,8 @@ An instance of var\_t can be one of following types
     int, int64_t, double, string, null
     array_t, object_t
 
-The var\_t is actually a boost::variant class, to get familiar with using it,
-please check the [boost::variant
-document](http://www.boost.org/doc/libs/1_49_0/doc/html/variant/tutorial.html)
+The var\_t is actually a boost::variant class, to get familiar with it, please 
+check the [boost::variant document](http://www.boost.org/doc/libs/1_49_0/doc/html/variant/tutorial.html).
 
 ##libjson.so: Pre-built grammar of frequently used iterator types
 
@@ -82,13 +80,13 @@ If you require to use different iterator types, you can simply include both
 iterator type. e.g.
 
 ```C++
-    #include "json.hpp"
-    #include "json_def.hpp"
+  #include "json.hpp"
+  #include "json_def.hpp"
 
-    // ...
-    using namespace yangacer;
-    json::grammar<my_iterator_type> grammar;
-    json::phrase_parse(...);
+  // ...
+  using namespace yangacer;
+  json::grammar<my_iterator_type> grammar;
+  json::phrase_parse(...);
 ```
 
 ##Processing of Characters 
@@ -119,21 +117,40 @@ yangacer::json.
     37        3.55          3.14
   </pre>
 
-#Tip
+#Tips
 
 ##Boost parsing speed with premodel
 
-  If you have knowledge of what fields and their type will be constructed
-  before parsing. You can premodel it. e.g.
+If you have knowledge of what fields and their type will be constructed
+before parsing. You can premodel it. e.g.
 
 ```C++
-    // Data to be parsed
-    // {"data":[1,2], "name":"acer", "ref":{}}
+  // Data to be parsed
+  // {"data":[1,2], "name":"acer", "ref":{}}
 
-    using namespace yangacer;
-    json::object_t obj;
-    obj["data"] = json::array_t();
-    obj["name"] = std::string();
-    obj["ref"] = json::object_t();
+  using namespace yangacer;
+  json::object_t obj;
+  obj["data"] = json::array_t();
+  obj["name"] = std::string();
+  obj["ref"] = json::object_t();
+
+  // do parse here after
 ```
 
+##Read from std::istream
+
+```C++
+  #include "parse.hpp"
+  #include "json/variant.hpp"
+  #include "json/parser.hpp"
+
+  bool parse(std::istream &in, json::object_t &result)
+  {
+    using namespace yangacer;
+    namespace io = boost::iostreams;
+
+    json::grammar<json::istream_iterator> grammar;
+    json::istream_iterator beg(in), end;
+    return json::phrase_parse(beg, end, grammar, json::space, result);
+  }
+```
