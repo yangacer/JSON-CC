@@ -10,4 +10,4 @@ add_executable ( test main.cpp )
 target_link_libraries ( test json )
 
 install ( TARGETS json DESTINATION lib )
-install ( FILES json.hpp util.hpp DESTINATION include/json )
+install ( FILES json.hpp parser.hpp parser_def.hpp util.hpp DESTINATION include/json )
