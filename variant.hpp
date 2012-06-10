@@ -16,7 +16,6 @@ typedef boost::mpl::vector<
   int64_t,
   double,
   std::string,
-  void*,
   std::deque<boost::recursive_variant_>,
   std::map<std::string, boost::recursive_variant_ >
   >::type types;
