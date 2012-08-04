@@ -146,7 +146,6 @@ before parsing. You can premodel it. e.g.
   bool parse(std::istream &in, json::object_t &result)
   {
     using namespace yangacer;
-    namespace io = boost::iostreams;
 
     json::grammar<json::istream_iterator> grammar;
     json::istream_iterator beg(in), end;
