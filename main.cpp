@@ -22,8 +22,8 @@ int main(int argc, char** argv)
     cerr<<"Parsing failed\n";
   }else{
     cout<<o.size()<<"\n";
-    //json::print prt(cout);
-    //prt(o);
+    json::print prt(cout);
+    prt(o);
   }
   return 0;
 }

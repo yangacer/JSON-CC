@@ -60,7 +60,7 @@ grammar<Iter>::grammar()
     var_r > *( ',' > var_r ) >>
     ']'];
 
-  var_r = 
+  var_r %= 
     lit("null") [_val = NULL]
     | bool_  
     | real_ | int_ | int64_ 
@@ -72,13 +72,14 @@ grammar<Iter>::grammar()
   // Accept UNICODE (no verification of any UNICODE rule)
   string_r %= lexeme['"' >
     *( (&lit('\\') >> unesc_char) |  (qi::byte_ - '"')  ) > '"'];
-  
+
+#ifdef JSON_PARSER_DEBUG_
   object_r.name("object");
   pair_r.name("pair");
   array_r.name("array");
   var_r.name("var");
   string_r.name("string");
-  
+
   qi::on_error<qi::fail>
   ( object_r ,
     std::cout<<
@@ -88,6 +89,13 @@ grammar<Iter>::grammar()
       construct<std::string>(_3,_2)<<
       std::endl
   );
+  
+  debug(object_r);
+  debug(pair);
+  debug(array);
+  debug(var);
+  debug(string);
+#endif
 }
 
 }} // namespace yangacer::json
