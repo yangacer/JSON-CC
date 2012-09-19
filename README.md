@@ -23,17 +23,16 @@ interchangeably.
     using namespace yangacer;
     
     string input = "{\"data\":\"Hello world!\"}";
-    json::grammar<> grammar; 
     json::object_t o;
     string::iterator 
       beg = input.begin(),
       end = input.end();
 
-    // or use json::parse(beg, end, grammar, o) to parse line-by-line
-    if(!json::phrase_parse(beg, end, grammar, json::space, o)){ 
+    // or use json::parse(beg, end, o) to parse line-by-line
+    if(!json::phrase_parse(beg, end, o)){ 
       cerr<<"Parsing failed\n";
     }else{
-      cout<<"Parsing success\n";
+      cout<<"Parsing successed\n";
       json::print prt(cout);
       prt(o);
     }
@@ -147,8 +146,7 @@ before parsing. You can premodel it. e.g.
   {
     using namespace yangacer;
 
-    json::grammar<json::istream_iterator> grammar;
     json::istream_iterator beg(in), end;
-    return json::phrase_parse(beg, end, grammar, json::space, result);
+    return json::phrase_parse(beg, end, result);
   }
 ```
