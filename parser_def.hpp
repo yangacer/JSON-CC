@@ -2,16 +2,19 @@
 #define JSON_DEF_HPP_
 
 #include "parser.hpp"
+#include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 #include <iostream>
+#include <limits>
 
 namespace yangacer {
 namespace json {
 
+namespace qi = boost::spirit::qi;
 namespace phoenix = boost::phoenix;
 
 template <typename T>
@@ -61,7 +64,10 @@ grammar<Iter>::grammar()
     ']'];
 
   var_r %= 
-    lit("null") [_val = NULL]
+    lit("null") 
+      [ _val = 
+          std::numeric_limits<boost::int64_t>::max()
+      ]
     | bool_  
     | real_ | int_ | int64_ 
     | (&lit('"') > string_r)  

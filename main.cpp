@@ -13,15 +13,13 @@ int main(int argc, char** argv)
   using namespace yangacer;
   
   json::istream_iterator beg(cin), end;
-
-  json::grammar<json::istream_iterator> grammar; 
   json::object_t o;
-  
   // or use json::parse(beg, end, grammar, o) to parse line-by-line
-  if(!json::phrase_parse(beg, end, grammar, json::space, o)){ 
-    cerr<<"Parsing failed\n";
+  if(!json::phrase_parse(beg, end, o)){ 
+    cerr << "Parsing failed\n";
   }else{
-    cout<<o.size()<<"\n";
+    cout << "Parsing successed\n";
+    //cout<<o.size()<<"\n";
     json::print prt(cout);
     prt(o);
   }

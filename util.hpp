@@ -3,32 +3,20 @@
 
 #include "variant.hpp"
 #include <boost/variant/static_visitor.hpp>
-#include <boost/spirit/include/karma.hpp>
-#include <boost/spirit/include/support_istream_iterator.hpp>
 
 namespace yangacer {
 namespace json {
-namespace karma = boost::spirit::karma;
-
-template <typename OutputIterator>
-struct escaped_string
-: karma::grammar<OutputIterator, std::string()>
-{
-    escaped_string();
-    karma::rule<OutputIterator, std::string()> esc_str;
-    karma::symbols<char, char const*> esc_char;
-};
 
 struct print
 : boost::static_visitor<>
 {
-  print(std::ostream &os):os_(&os){}
+  print(std::ostream &os):os_(&os),depth_(0){}
 
   template<typename T>
   void operator()(T const& v) const
   { (*os_)<<v; }
   
-  void operator()(void*) const;
+  void operator()(boost::int64_t const& i) const;
 
   void operator()(bool const b) const;
 
@@ -38,8 +26,9 @@ struct print
 
   void operator()(object_t const &m) const;
 
-  static escaped_string<boost::spirit::ostream_iterator> str_gen;
+private:
   std::ostream *os_;
+  mutable int depth_;
 };
 
 }} // namespace yangacer::json
