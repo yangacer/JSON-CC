@@ -81,10 +81,17 @@ iterator type. e.g.
 ```C++
   #include "json/parser.hpp"
   #include "json/parser_def.hpp"
-  // ...
+
   using namespace yangacer;
+
+  my_string input(...);
   json::grammar<my_iterator_type> grammar;
-  json::phrase_parse(...);
+  json::object_t object;
+  my_iterator_type begin(input.begin()), end(input.end());
+
+  // Note that usage of boost::qi::phrase_parse is different from 
+  // the one provided by yangacer::json.
+  boost::qi::phrase_parse(begin, end, grammar, boost::qi::space, object);
 ```
 
 ##Processing of Characters 
@@ -107,12 +114,12 @@ yangacer::json.
    benchmarks:
   
   <pre>
-    input(mb) yangacer(sec) json_spirit
-    5.6       0.52          0.44
-    11        1.02          0.88
-    16        1.54          1.30
-    21        2.03          1.77
-    37        3.55          3.14
+    input(mb) yangacer(sec) json_spirit yangacer(premodel)
+    5.6       0.52          0.44        0.49
+    11        1.02          0.88        0.97
+    16        1.54          1.30        1.47
+    21        2.03          1.77        1.93
+    37        3.55          3.14        3.4
   </pre>
 
 #Tips

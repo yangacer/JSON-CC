@@ -84,7 +84,8 @@ void print::operator()(object_t const &m) const
 {
   using namespace std;
   
-  (*os_) << "\n";
+  if(depth_)
+    (*os_) << "\n";
   PRINT_SPACE(depth_, *os_);
 
   (*os_) << "{\n";
@@ -102,7 +103,10 @@ void print::operator()(object_t const &m) const
   depth_--;
   (*os_) << "\n";
   PRINT_SPACE(depth_, *os_);
-  (*os_) << "}\n";
+  (*os_) << "}";
+  if(!depth_) 
+    (*os_) << "\n";
+
 }
 
 }}
