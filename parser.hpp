@@ -22,7 +22,7 @@ using boost::spirit::istream_iterator;
 
 template<typename Iterator = std::string::const_iterator>
 struct grammar
-: boost::spirit::qi::grammar<Iterator, object_t()>
+: boost::spirit::qi::grammar<Iterator, var_t()>
 {
   grammar();
 
@@ -37,19 +37,19 @@ struct grammar
 };
 
 template<typename Iter>
-bool phrase_parse(Iter &beg, Iter &end, object_t &o)
+bool phrase_parse(Iter &beg, Iter &end, var_t &v)
 {
   namespace qi = boost::spirit::qi;
   static grammar<Iter> parser;
-  return qi::phrase_parse(beg, end, parser, qi::space, o);
+  return qi::phrase_parse(beg, end, parser, qi::space, v);
 }
 
 template<typename Iter>
-bool parse(Iter &beg, Iter &end, object_t &o)
+bool parse(Iter &beg, Iter &end, var_t &v)
 {
   namespace qi = boost::spirit::qi;
   static grammar<Iter> parser;
-  return qi::parse(beg, end, parser, qi::space, o);
+  return qi::parse(beg, end, parser, qi::space, v);
 }
 
 } }// namespace yangacer::json

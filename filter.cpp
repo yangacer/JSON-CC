@@ -1,36 +1,59 @@
 #include "filter.hpp"
+#include <boost/mpl/find.hpp>
+
+#define INDEX_OF_TYPE(T, List) \
+  boost::mpl::find<List, T>::type::pos::value
 
 namespace yangacer {
 namespace json {
-  
-#define OBJECT_T_WHICH 6
 
-  bool field_filter(object_t &o, boost::regex const& regex)
+  /*
+  enum WHICH_TYPE {
+    IS_ARRAY_T = INDEX_OF_TYPE(array_t, types),
+    IS_OBJECT_T = INDEX_OF_TYPE(var_t, types)
+  };
+  */
+  /*
+  bool field_filter(array_t &a, boost::regex const &regex)
+  {
+    for(auto val = a.begin(); val != a.end(); ++ val){
+      
+    }
+  }
+  */
+
+  bool field_filter(var_t &v, boost::regex const& regex)
   {
     bool any_matched = false;
 
-    for(auto attr = o.begin(); attr != o.end(); ++attr){
+    for(auto attr = v.begin(); attr != v.end(); ++attr){
 
       bool child_matched = false;
-
-      if(OBJECT_T_WHICH == attr->second.which()){
+      
+      switch(attr->second.which()){
+      case 5:
+        
+        break;
+      case 6:
         child_matched = field_filter(boost::get<object_t>(attr->second), regex);
+        break;
       }
+      
       if(child_matched || boost::regex_search(attr->first, regex))
         any_matched = true;
       else
-        attr = o.erase(attr);
-      if(!o.size()) break;
+        attr = v.erase(attr);
+      if(!v.size()) break;
     }
     return any_matched;
   }
 
-  void inplace_field_filter(object_t &o, boost::regex const& regex)
+  void inplace_field_filter(var_t &v, boost::regex const& regex)
   {
-    field_filter(o, regex);
+    field_filter(v, regex);
   }
 
-  void inplace_field_filter(object_t &o, boost::regex const& regex, 
+  void inplace_field_filter(var_t &v, boost::regex const& regex, 
                             int depth_begin, int depth_end)
   {
     

@@ -27,7 +27,7 @@ struct strict_real_policies
 
 template<typename Iter>
 grammar<Iter>::grammar() 
-: grammar::base_type(object_r, "object")
+: grammar::base_type(var_r, "object")
 {
   using qi::char_;
   using qi::lit;

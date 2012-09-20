@@ -17,7 +17,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
   set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-conversion-null")
 endif()
 
-add_library ( json SHARED parser_inst.cpp util.cpp filter.cpp)
+add_library ( json SHARED parser_inst.cpp util.cpp print.cpp) # filter.cpp)
 target_link_libraries ( json boost_regex )
 
 add_subdirectory ( tests )
