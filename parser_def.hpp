@@ -31,7 +31,7 @@ grammar<Iter>::grammar()
 {
   using qi::char_;
   using qi::lit;
-  using qi::int_;
+  using qi::uint_;
   using qi::lexeme;
   using qi::skip;
   using qi::space;
@@ -69,7 +69,7 @@ grammar<Iter>::grammar()
           std::numeric_limits<boost::int64_t>::max()
       ]
     | bool_  
-    | real_ | int_ | int64_ 
+    | real_ | uint_ | int64_ 
     | (&lit('"') > string_r)  
     | (&lit('{') > object_r)  
     | (&lit('[') > array_r )

@@ -12,7 +12,7 @@ namespace json{
 
 typedef boost::mpl::vector<
   bool,
-  int,
+  unsigned int,
   int64_t,
   double,
   std::string,
