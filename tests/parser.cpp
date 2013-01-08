@@ -12,6 +12,7 @@ int main(int argc, char** argv)
   using namespace std;
   using namespace yangacer;
   
+  cin.unsetf(std::ios::skipws);
   json::istream_iterator beg(cin), end;
   json::var_t v;
   // or use json::parse(beg, end, grammar, o) to parse line-by-line

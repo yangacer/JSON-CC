@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.8)
 project (json)
 
-find_package ( Boost 1.45.0 COMPONENTS
+find_package ( Boost COMPONENTS
                serialization
                regex)
 

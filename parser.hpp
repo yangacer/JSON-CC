@@ -1,8 +1,6 @@
 #ifndef JSON_PARSER_HPP_
 #define JSON_PARSER_HPP_
-
 #include "variant.hpp"
-//#include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/qi_char_class.hpp>
 #include <boost/spirit/include/qi_rule.hpp>
 #include <boost/spirit/include/qi_grammar.hpp>
@@ -13,24 +11,20 @@
 namespace yangacer {
 namespace json {
 
-// namespace ascii = boost::spirit::ascii;
-
-//using qi::parse;
-//using qi::phrase_parse;
-//using qi::space;
 using boost::spirit::istream_iterator;
 
 template<typename Iterator = std::string::const_iterator>
 struct grammar
-: boost::spirit::qi::grammar<Iterator, var_t()>
+: boost::spirit::qi::grammar<Iterator, var_t(), boost::spirit::qi::space_type>
 {
+  typedef boost::spirit::qi::space_type space_type;
   grammar();
 
-  boost::spirit::qi::rule<Iterator, object_t()> object_r;
-  boost::spirit::qi::rule<Iterator, array_t()> array_r;
-  boost::spirit::qi::rule<Iterator, std::pair<object_t::key_type, object_t::mapped_type>() > pair_r;
-  boost::spirit::qi::rule<Iterator, std::string()> string_r;
-  boost::spirit::qi::rule<Iterator, var_t()> var_r;
+  boost::spirit::qi::rule<Iterator, object_t(), space_type> object_r;
+  boost::spirit::qi::rule<Iterator, array_t(), space_type> array_r;
+  boost::spirit::qi::rule<Iterator, std::pair<object_t::key_type, object_t::mapped_type>(), space_type > pair_r;
+  boost::spirit::qi::rule<Iterator, std::string(), space_type> string_r;
+  boost::spirit::qi::rule<Iterator, var_t(), space_type> var_r;
 
   boost::spirit::qi::symbols<char const, char const> unesc_char;
 

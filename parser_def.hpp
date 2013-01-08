@@ -34,7 +34,6 @@ grammar<Iter>::grammar()
   using qi::uint_;
   using qi::lexeme;
   using qi::skip;
-  using qi::space;
   using qi::double_;
   using qi::bool_;
   using phoenix::construct;
@@ -49,19 +48,18 @@ grammar<Iter>::grammar()
     ("\\/", '/')  ("\\b", '\b')   ("\\f", '\f') 
     ("\\n", '\n') ("\\r", '\r')   ("\\t", '\t');
 
-  object_r %=  skip(space)[
+  object_r %=  
     '{' > *( pair_r >> *(',' >> pair_r) ) >  '}'
-    ]
     ;
 
-  pair_r %= skip(space)[
+  pair_r %= 
     string_r > (':' > var_r)
-    ];
+    ;
 
-  array_r %= skip(space)[
+  array_r %= 
     '[' >
     var_r > *( ',' > var_r ) >>
-    ']'];
+    ']';
 
   var_r %= 
     lit("null") 
@@ -90,17 +88,17 @@ grammar<Iter>::grammar()
   ( object_r ,
     std::cout<<
       val("Error! Expecting ")<<
-      _4<<
+      _4<<  
       val(" here: ")<<
       construct<std::string>(_3,_2)<<
       std::endl
   );
   
   debug(object_r);
-  debug(pair);
-  debug(array);
-  debug(var);
-  debug(string);
+  debug(pair_r);
+  debug(array_r);
+  debug(var_r);
+  debug(string_r);
 #endif
 }
 
