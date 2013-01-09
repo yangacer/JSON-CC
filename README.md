@@ -74,9 +74,8 @@ Note that the boost::spirit::istream\_iterator is an adaptor that allow a parser
 read input from std::istream class. In case of using theose types, compile time of user code can be
 reduced largely via linking the pre-built library.
 
-If you require to use different iterator types, you can simply include both
-"json/parser.hpp" and "json/parser\_def.hpp" in your code and define a grammar of the
-iterator type. e.g.
+If you require to use different iterator types, you can simply include "json/parser\_def.hpp" 
+in your code and define a grammar of the iterator type. e.g.
 
 ```C++
   #include "json/parser.hpp"
