@@ -118,7 +118,7 @@ You can get a reference to any value of a deep nested object via
   json::var_t variable;
   json::phrase_parse(beg, end, variable);
   std::cout << 
-    json::member_of(variable)["object_1"]["object_2"]["array"][1] << 
+    json::member_of(variable)["object_1"]["object_2"]["array"][1].get<std::string>() << 
     "\n";
 
   // result:
