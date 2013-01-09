@@ -81,17 +81,48 @@ iterator type. e.g.
 ```C++
   #include "json/parser.hpp"
   #include "json/parser_def.hpp"
-
+  // ...
   using namespace yangacer;
 
   my_string input(...);
   json::grammar<my_iterator_type> grammar;
-  json::object_t object;
+  json::var_t variable;
   my_iterator_type begin(input.begin()), end(input.end());
 
-  // Note that usage of boost::qi::phrase_parse is different from 
-  // the one provided by yangacer::json.
-  boost::qi::phrase_parse(begin, end, grammar, boost::qi::space, object);
+  json::phrase_parse(begin, end, variable);
+```
+
+##Convinent Access Method
+
+You can get a reference to any value of a deep nested object via
+
+```C++
+  #include <iostream>
+  #include "json/parser.hpp"
+  #include "json/accessor.hpp"
+  // ...
+  using namespace yangacer;
+  
+  std::string input = 
+    "{" 
+    " \"object_1\" :"
+    " {"
+    "   \"object_2\" : "
+    "   {"
+    "     \"array\" : [123, \"Hi there!\"] "
+    "   }"
+    " }"
+    "}"
+    ;
+  auto beg(input.begin()), end(input.end());
+  json::var_t variable;
+  json::phrase_parse(beg, end, variable);
+  std::cout << 
+    json::member_of(variable)["object_1"]["object_2"]["array"][1] << 
+    "\n";
+
+  // result:
+  // Hi there!
 ```
 
 ##Processing of Characters 
@@ -108,7 +139,7 @@ yangacer::json.
 
 1. json\_spirit wraps boost::variant as an internal structure and dose not
    allow access to a terminal value. e.g. numeric and string. Either
-   boost::apply\_visitor can not be used.
+   boost::apply\_visitor can not be applied.
 
 2. json\_spirit can parse data a little bit faster. Hereby are some
    benchmarks:
@@ -126,7 +157,7 @@ yangacer::json.
 
 ##Boost parsing speed with premodel
 
-If you have knowledge of what fields and their type will be constructed
+If you have knowledge of what fields and what types will be constructed
 before parsing. You can premodel it. e.g.
 
 ```C++
@@ -152,7 +183,8 @@ before parsing. You can premodel it. e.g.
   bool parse(std::istream &in, json::object_t &result)
   {
     using namespace yangacer;
-
+    
+    in.usetf(std::ios::skipws); // !!!Important
     json::istream_iterator beg(in), end;
     return json::phrase_parse(beg, end, result);
   }
