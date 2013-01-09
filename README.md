@@ -71,7 +71,7 @@ check the [boost::variant document](http://www.boost.org/doc/libs/1_49_0/doc/htm
 
 Supplied types are std::string::const\_iterator, char const\*, and boost::spirit::istream\_iterator.
 Note that the boost::spirit::istream\_iterator is an adaptor that allow a parser to
-read input from std::istream class. In case of using theose types, compilation time of user code can be
+read input from std::istream class. In case of using theose types, compile time of user code can be
 reduced largely via linking the pre-built library.
 
 If you require to use different iterator types, you can simply include both
