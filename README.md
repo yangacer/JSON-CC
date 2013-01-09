@@ -23,18 +23,18 @@ interchangeably.
     using namespace yangacer;
     
     string input = "{\"data\":\"Hello world!\"}";
-    json::object_t o;
+    json::var_t v;
     string::iterator 
       beg = input.begin(),
       end = input.end();
 
-    // or use json::parse(beg, end, o) to parse line-by-line
-    if(!json::phrase_parse(beg, end, o)){ 
+    // or use json::parse(beg, end, v) to parse line-by-line
+    if(!json::phrase_parse(beg, end, v)){ 
       cerr<<"Parsing failed\n";
     }else{
       cout<<"Parsing successed\n";
       json::print prt(cout);
-      prt(o);
+      prt(v);
     }
     return 0;
   }    
@@ -61,15 +61,15 @@ A JSON object is modeled by std::map&lt;std::string, json::var\_t&gt;.
 
 An instance of var\_t can be one of following types
 
-    int, int64_t, double, string, null
+    unsigned int, int64_t, double, string, null
     array_t, object_t
 
-The var\_t is actually a boost::variant class, to get familiar with it, please 
+The var\_t is actually of type boost::variant, to get familiar with it, please 
 check the [boost::variant document](http://www.boost.org/doc/libs/1_49_0/doc/html/variant/tutorial.html).
 
 ##libjson.so: Pre-built grammar of frequently used iterator types
 
-The types are std::string::const\_iterator, char const\*, and boost::spirit::istream\_iterator.
+Supplied types are std::string::const\_iterator, char const\*, and boost::spirit::istream\_iterator.
 Note that the boost::spirit::istream\_iterator is an adaptor that allow a parser to
 read input from std::istream class. In case of using theose types, compilation time of user code can be
 reduced largely via linking the pre-built library.
@@ -180,7 +180,7 @@ before parsing. You can premodel it. e.g.
   #include "json/variant.hpp"
   #include "json/parser.hpp"
 
-  bool parse(std::istream &in, json::object_t &result)
+  bool parse(std::istream &in, json::var_t &result)
   {
     using namespace yangacer;
     
