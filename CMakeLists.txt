@@ -2,8 +2,7 @@ cmake_minimum_required (VERSION 2.8)
 project (json)
 
 find_package ( Boost COMPONENTS
-               serialization
-               regex)
+               serialization)
 
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
@@ -17,10 +16,12 @@ if(CMAKE_COMPILER_IS_GNUCXX)
   set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-conversion-null")
 endif()
 
+include_directories ( json )
+
 add_library ( json SHARED parser_inst.cpp util.cpp print.cpp accessor.cpp) #filter.cpp)
-target_link_libraries ( json boost_regex )
+target_link_libraries ( json ${Boost_LIBRARIES} )
 
 add_subdirectory ( tests )
 
 install ( TARGETS json DESTINATION lib )
-install ( FILES json.hpp parser.hpp parser_def.hpp util.hpp DESTINATION include/json )
+install ( DIRECTORY json  DESTINATION include )
