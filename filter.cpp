@@ -21,7 +21,7 @@ namespace json {
     }
   }
   */
-
+  // TODO Adopt var_t rather than object_t
   bool field_filter(var_t &v, boost::regex const& regex)
   {
     bool any_matched = false;

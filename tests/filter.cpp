@@ -31,14 +31,15 @@ int main()
   if(!json::phrase_parse(beg, end, v)){
     cerr << "Parsing failed\n";
   }else{
+    json::object_t &o =
+      boost::get<json::object_t>(v);
     cout << "Parsing successed\n";
-    json::print prt(cout);
+    json::pretty_print(cout, v);
     cout << "== Origin =========\n";
-    prt(v);
     boost::regex regex("^re");
-    json::inplace_field_filter(v, regex);
+    json::inplace_field_filter(o, regex);
     cout << "== Filtered =======\n";
-    prt(v);
+    json::pretty_print(cout, v);
   }
   return 0;
 }
