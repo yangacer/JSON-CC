@@ -13,8 +13,11 @@ struct member_of
   member_of &operator[](std::string const &member);
   member_of &operator[](std::size_t offset);
 
-  template <typename T>
+  template<typename T>
   T &value() { return boost::get<T>(*v_ptr_); }
+
+  template<typename T>
+  void value(T&& val) { *v_ptr_ = val; }
 
 private:
   var_t *v_ptr_;
