@@ -49,16 +49,16 @@ grammar<Iter>::grammar()
     ("\\n", '\n') ("\\r", '\r')   ("\\t", '\t');
 
   object_r %=  
-    '{' > *( pair_r >> *(',' >> pair_r) ) >  '}'
+    '{' >> *( pair_r >> *(',' >> pair_r) ) >>  '}'
     ;
 
   pair_r %= 
-    string_r > (':' > var_r)
+    string_r >> (':' >> var_r)
     ;
 
   array_r %= 
-    '[' >
-    var_r > *( ',' > var_r ) >>
+    '[' >>
+    var_r >> *( ',' >> var_r ) >>
     ']';
 
   var_r %= 
@@ -68,14 +68,14 @@ grammar<Iter>::grammar()
       ]
     | bool_  
     | real_ | uint_ | int64_ 
-    | (&lit('"') > string_r)  
-    | (&lit('{') > object_r)  
-    | (&lit('[') > array_r )
+    | (&lit('"') >> string_r)  
+    | (&lit('{') >> object_r)  
+    | (&lit('[') >> array_r )
     ;
 
   // Accept UNICODE (no verification of any UNICODE rule)
   string_r %= lexeme['"' >
-    *( (&lit('\\') >> unesc_char) |  (qi::byte_ - '"')  ) > '"'];
+    *( (&lit('\\') >> unesc_char) |  (qi::byte_ - '"')  ) >> '"'];
 
 #ifdef JSON_PARSER_DEBUG_
   object_r.name("object");

@@ -1,0 +1,6 @@
+{
+  "object" : {
+    "green" : " is a \"color\"."
+    "array" : [ "hi", 1234, "123" ]
+  }
+}

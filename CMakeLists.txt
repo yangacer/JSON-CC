@@ -21,6 +21,8 @@ include_directories ( json )
 add_library ( json SHARED parser_inst.cpp util.cpp print.cpp accessor.cpp) #filter.cpp)
 target_link_libraries ( json ${Boost_LIBRARIES} )
 
+ENABLE_TESTING()
+
 add_subdirectory ( tests )
 
 install ( TARGETS json DESTINATION lib )

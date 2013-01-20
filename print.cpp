@@ -43,6 +43,10 @@ void generate_escaped_string(Iter &sink, std::string const& str)
 #define PRINT_SPACE(Depth, OStream) \
   for(int i__ =0; i__ < Depth; ++i__){ (OStream) << "  "; }
 
+print::print(std::ostream &os, mode_t mode)
+: os_(&os), mode_(mode), depth_(0) 
+{}
+
 void print::operator()(boost::int64_t const& i) const
 { 
   if(i == std::numeric_limits<boost::int64_t>::max())
@@ -64,19 +68,26 @@ void print::operator()(std::string const& s) const
 
 void print::operator()(array_t const &v) const
 {
-  (*os_) << "\n";
-  PRINT_SPACE(depth_, *os_);
-  (*os_) << "[\n";
+  if(mode_) {
+    (*os_) << "\n";
+    PRINT_SPACE(depth_, *os_);
+  }
+  (*os_) << "[";
+  if(mode_) (*os_) << "\n";
   ++depth_;
   for(size_t i=0;i<v.size();++i){
-    PRINT_SPACE(depth_, *os_);
+    if(i != 0) { 
+      (*os_)<<",";
+      if(mode_) (*os_) << "\n";
+    }
+    if(mode_) PRINT_SPACE(depth_, *os_);
     boost::apply_visitor(*this, v[i]);
-    if(i + 1 != v.size())
-      (*os_)<<",\n";
   }
   --depth_;
-  (*os_) << "\n";
-  PRINT_SPACE(depth_, *os_);
+  if(mode_) {
+    (*os_) << "\n";
+    PRINT_SPACE(depth_, *os_);
+  }
   (*os_)<<"]";
 }
 
@@ -84,27 +95,34 @@ void print::operator()(object_t const &m) const
 {
   using namespace std;
   
-  if(depth_)
-    (*os_) << "\n";
-  PRINT_SPACE(depth_, *os_);
+  if(mode_) {
+    if(depth_)
+      (*os_) << "\n";
+    PRINT_SPACE(depth_, *os_);
+  }
 
-  (*os_) << "{\n";
+  (*os_) << "{";
+  if(mode_) (*os_) << "\n";
   object_t::const_iterator i = m.begin();
   object_t::const_iterator j = m.begin();
   ++depth_;
   while(i != m.end()){
-    PRINT_SPACE(depth_, *os_);
+    if(mode_) PRINT_SPACE(depth_, *os_);
     (*this)(i->first);
     (*os_) << " : ";
     boost::apply_visitor(*this, i->second);
-    if(++i != m.end())
-      (*os_) << ",\n";
+    if(++i != m.end()) {
+      (*os_) << ",";
+      if(mode_) (*os_) << "\n";
+    }
   }
   depth_--;
-  (*os_) << "\n";
-  PRINT_SPACE(depth_, *os_);
+  if(mode_) {
+    (*os_) << "\n";
+    PRINT_SPACE(depth_, *os_);
+  }
   (*os_) << "}";
-  if(!depth_) 
+  if(mode_ && !depth_) 
     (*os_) << "\n";
 
 }

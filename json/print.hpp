@@ -10,7 +10,9 @@ namespace json {
 struct print
 : boost::static_visitor<>
 {
-  print(std::ostream &os):os_(&os),depth_(0){}
+  enum mode_t { compact=0, pretty };
+
+  print(std::ostream &os, mode_t mode=pretty);
 
   template<typename T>
   void operator()(T const& v) const
@@ -28,6 +30,7 @@ struct print
 
 private:
   std::ostream *os_;
+  mode_t mode_;
   mutable int depth_;
 };
 
