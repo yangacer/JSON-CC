@@ -19,6 +19,9 @@ struct member_of
   template<typename T>
   void value(T&& val) { *v_ptr_ = val; }
 
+  template<typename T>
+  member_of& operator=(T&& val) { *v_ptr_ = val; }
+
 private:
   var_t *v_ptr_;
 };
