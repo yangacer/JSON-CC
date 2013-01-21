@@ -20,11 +20,14 @@ struct member_of
   void value(T&& val) { *v_ptr_ = val; }
 
   template<typename T>
-  member_of& operator=(T&& val) { *v_ptr_ = val; }
+  member_of& operator=(T&& val) { *v_ptr_ = val; return *this; }
 
 private:
   var_t *v_ptr_;
 };
+
+// brief alias
+typedef member_of mbof;
 
 }}
 
