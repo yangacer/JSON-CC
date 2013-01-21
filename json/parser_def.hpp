@@ -44,7 +44,8 @@ grammar<Iter>::grammar()
   typedef qi::int_parser< boost::int64_t > int64_parser;
   int64_parser int64_;
 
-  unesc_char.add  ("\\\"", '\"')  ("\\\\", '\\')
+  unesc_char.add  
+    ("\\\"", '\"')  ("\\\\", '\\') ("\\\'", '\'')
     ("\\/", '/')  ("\\b", '\b')   ("\\f", '\f') 
     ("\\n", '\n') ("\\r", '\r')   ("\\t", '\t');
 
