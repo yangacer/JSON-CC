@@ -2,14 +2,16 @@
 #define JSONCC_ACCESSOR_HPP_
 
 #include <string>
+#include "boost/noncopyable.hpp"
 #include "variant.hpp"
 
 namespace yangacer {
 namespace json {
 
-struct member_of
+struct member_of 
+  : private boost::noncopyable
 {
-  member_of(var_t &v);
+  explicit member_of(var_t &v);
   member_of &operator[](std::string const &member);
   member_of &operator[](std::size_t offset);
 
@@ -21,9 +23,8 @@ struct member_of
 
   template<typename T>
   member_of& operator=(T&& val) { *v_ptr_ = val; return *this; }
-
-  var_t &operator*();
-
+  
+  var_t &var();
 private:
   var_t *v_ptr_;
 };
