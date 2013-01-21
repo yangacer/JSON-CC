@@ -10,6 +10,8 @@
 namespace yangacer{
 namespace json{
 
+using boost::get;
+
 typedef boost::mpl::vector<
   bool,
   unsigned int,
