@@ -21,4 +21,7 @@ member_of::operator[](std::size_t offset)
   return *this;
 }
 
+var_t &member_of::operator *()
+{ return *v_ptr_; }
+
 }} // namespace yangacer::json

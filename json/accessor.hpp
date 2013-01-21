@@ -22,6 +22,8 @@ struct member_of
   template<typename T>
   member_of& operator=(T&& val) { *v_ptr_ = val; return *this; }
 
+  var_t &operator*();
+
 private:
   var_t *v_ptr_;
 };
