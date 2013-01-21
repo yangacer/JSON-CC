@@ -27,7 +27,7 @@ private:
 };
 
 // brief alias
-typedef member_of mbof;
+#define mbof(X) (member_of(X))
 
 }}
 
