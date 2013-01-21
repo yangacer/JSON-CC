@@ -26,9 +26,9 @@ private:
   var_t *v_ptr_;
 };
 
-// brief alias
-#define mbof(X) (member_of(X))
 
 }}
+// brief alias
+#define mbof(X) (yangacer::json::member_of(X))
 
 #endif
