@@ -24,7 +24,13 @@ struct member_of
   template<typename T>
   member_of& operator=(T&& val) { *v_ptr_ = val; return *this; }
   
-  var_t &var();
+  var_t&          var();
+  object_t&       object();
+  array_t&        array();
+  std::string&    string();
+  unsigned int&   uint();
+  boost::int64_t& int64();
+
 private:
   var_t *v_ptr_;
 };
