@@ -25,5 +25,12 @@ ENABLE_TESTING()
 
 add_subdirectory ( tests )
 
-install ( TARGETS json DESTINATION lib )
-install ( DIRECTORY json  DESTINATION include )
+option ( JSON_INSTALL_RUNTIME ON )
+option ( JSON_INSTALL_HEADERS OFF )
+
+if( JSON_INSTALL_RUNTIME )
+  install ( TARGETS json DESTINATION lib )
+endif ()
+if( JSON_INSTALL_HEADERS )
+  install ( DIRECTORY json  DESTINATION include )
+endif ()
