@@ -15,10 +15,9 @@ struct print
   print(std::ostream &os, mode_t mode=pretty);
 
   template<typename T>
-  void operator()(T const& v) const
-  { (*os_)<<v; }
-  
-  void operator()(boost::int64_t const& i) const;
+  void operator()(T const& v) const  { (*os_)<<v; }
+ 
+  void operator()(boost::blank const &b) const;
 
   void operator()(bool const b) const;
 

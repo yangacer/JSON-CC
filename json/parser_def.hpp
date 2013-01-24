@@ -63,10 +63,7 @@ grammar<Iter>::grammar()
     ']';
 
   var_r %= 
-    lit("null") 
-      [ _val = 
-          std::numeric_limits<boost::int64_t>::max()
-      ]
+    lit("null") [ _val = boost::blank() ]
     | bool_  
     | real_ | uint_ | int64_ 
     | (&lit('"') >> string_r)  

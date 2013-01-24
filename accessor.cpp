@@ -3,21 +3,47 @@
 namespace yangacer {
 namespace json {
 
+enum { 
+  ARRAY_WHICH   = boost::mpl::find<var_t::types,array_t>::type::pos::value, 
+  OBJECT_WHICH  = boost::mpl::find<var_t::types,object_t>::type::pos::value
+};
+
 member_of::member_of(var_t &v)
   : v_ptr_(&v)
 {}
 
+member_of::operator bool()
+{ return v_ptr_ != 0; }
+
 member_of& 
-member_of::operator[](std::string const &member)
+member_of::operator[](char const* member)
 {
-  v_ptr_ = &(boost::get<object_t>(*v_ptr_)[member]);
+  if(v_ptr_) {
+    if( 0 == v_ptr_->which() ) 
+      *v_ptr_ = object_t();
+
+    if(OBJECT_WHICH == v_ptr_->which()) {
+      v_ptr_ = &(boost::get<object_t>(*v_ptr_)[member]);
+    } else {
+      v_ptr_ = 0;
+    }
+  }
   return *this;
 }
 
 member_of&
 member_of::operator[](std::size_t offset)
 {
-  v_ptr_ = &(boost::get<array_t>(*v_ptr_)[offset]);
+  if(v_ptr_) {
+    if( 0 == v_ptr_->which() ) 
+      *v_ptr_ = array_t();
+
+    if(ARRAY_WHICH == v_ptr_->which()) {
+      v_ptr_ = &(boost::get<array_t>(*v_ptr_)[offset]);
+    } else {
+      v_ptr_ = 0;
+    }
+  }
   return *this;
 }
 

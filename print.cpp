@@ -47,12 +47,9 @@ print::print(std::ostream &os, mode_t mode)
 : os_(&os), mode_(mode), depth_(0) 
 {}
 
-void print::operator()(boost::int64_t const& i) const
+void print::operator()(boost::blank const &b) const
 { 
-  if(i == std::numeric_limits<boost::int64_t>::max())
-    (*os_) << "null";
-  else
-    (*os_) << i;
+  (*os_) << "null" ;
 }
 
 void print::operator()(bool const b) const
