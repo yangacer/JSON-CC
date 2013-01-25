@@ -22,6 +22,9 @@ struct member_of
   T &value() { return boost::get<T>(*v_ptr_); }
 
   template<typename T>
+  T const &value() const { return boost::get<T>(*v_ptr_); }
+
+  template<typename T>
   void value(T&& val) { if(v_ptr_) *v_ptr_ = val; }
 
   template<typename T>
