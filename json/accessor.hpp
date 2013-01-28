@@ -16,7 +16,7 @@ struct member_of
   member_of &operator[](char const* member);
   member_of &operator[](std::size_t offset);
 
-  operator bool();
+  operator bool() const;
 
   template<typename T>
   T &value() { return boost::get<T>(*v_ptr_); }
@@ -57,29 +57,75 @@ private:
 template<typename T>
 bool operator==(member_of const &lhs, T const &rhs)
 {
-  return lhs.value<T>() == rhs;
+  return lhs && lhs.value<T>() == rhs;
 }
 template<typename T>
 bool operator==(T const &lhs, member_of const &rhs)
 {
-  return lhs == rhs.value<T>();
+  return rhs && lhs == rhs.value<T>();
 }
 
 template<typename T>
 bool operator < (member_of const &lhs, T const &rhs)
 {
-  return lhs.value<T>() < rhs; 
+  return lhs ? lhs.value<T>() < rhs : true; 
 }
 
 template<typename T>
 bool operator < (T const &lhs, member_of const &rhs)
 {
-  return lhs < rhs.value<T>();
+  return rhs ? lhs < rhs.value<T>() : false;
 }
 
+struct const_member_of 
+  : private boost::noncopyable
+{
+  explicit const_member_of(var_t const &v);
+  const_member_of &operator[](char const* member);
+  const_member_of &operator[](std::size_t offset);
 
-}}
+  operator bool() const;
+
+  template<typename T>
+  T const &value() const { return boost::get<T>(*v_ptr_); }
+
+  var_t const&          var();
+  object_t const&       object();
+  array_t const&        array();
+  std::string const&    string();
+  unsigned int const&   uint();
+  boost::int64_t const& int64();
+
+private:
+  var_t const *v_ptr_;
+};
+
+template<typename T>
+bool operator==(const_member_of const &lhs, T const &rhs)
+{
+  return lhs && lhs.value<T>() == rhs;
+}
+template<typename T>
+bool operator==(T const &lhs, const_member_of const &rhs)
+{
+  return rhs && lhs == rhs.value<T>();
+}
+
+template<typename T>
+bool operator < (const_member_of const &lhs, T const &rhs)
+{
+  return lhs ? lhs.value<T>() < rhs : true; 
+}
+
+template<typename T>
+bool operator < (T const &lhs, const_member_of const &rhs)
+{
+  return rhs ? lhs < rhs.value<T>() : false;
+}
+
+}} // namespace yangacer::json
 // brief alias
 #define mbof(X) (yangacer::json::member_of(X))
+#define cmbof(X) (yangacer::json::const_member_of(X))
 
 #endif

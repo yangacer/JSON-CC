@@ -17,7 +17,7 @@ int main()
   // "error" is already an uint
   // Follwing access is non sense. Consequently, we
   // got return value 'false'
-  assert( false == mbof(mix)["error"]["wrong"] ); 
+  assert( !mbof(mix)["error"]["wrong"] ); 
   
   // Assign to the undefeined field is also
   // equavalent to nop
@@ -45,6 +45,13 @@ int main()
 
   // Let's see what we got.
   json::pretty_print(cout, mix);
+
+  
+  json::var_t const & cmix(mix);
+
+  // Const version member_of
+  assert (!cmbof(cmix)["error"]["wrong"] );
+  assert( cmbof(cmix)["object"]["msg"] == string("default_msg") );
 
   return 0;
 }
