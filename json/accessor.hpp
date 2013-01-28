@@ -49,7 +49,7 @@ struct member_of
   std::string&    string();
   unsigned int&   uint();
   boost::int64_t& int64();
-
+  bool is_null() const;
 private:
   var_t *v_ptr_;
 };
@@ -95,7 +95,7 @@ struct const_member_of
   std::string const&    string();
   unsigned int const&   uint();
   boost::int64_t const& int64();
-
+  bool is_null() const;
 private:
   var_t const *v_ptr_;
 };

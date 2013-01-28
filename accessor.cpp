@@ -54,6 +54,7 @@ std::string&    member_of::string() { return value<std::string>(); };
 unsigned int&   member_of::uint()   { return value<unsigned int>(); };
 boost::int64_t& member_of::int64()  { return value<boost::int64_t>(); };
 
+bool member_of::is_null() const { return 0 == v_ptr_ || v_ptr_->which() == 0; }
 
 // ---- const_member_of impl ----
 
@@ -95,5 +96,7 @@ array_t const&        const_member_of::array()  { return value<array_t>(); }
 std::string const&    const_member_of::string() { return value<std::string>(); };
 unsigned int const&   const_member_of::uint()   { return value<unsigned int>(); };
 boost::int64_t const& const_member_of::int64()  { return value<boost::int64_t>(); };
+
+bool const_member_of::is_null() const { return 0 == v_ptr_ || v_ptr_->which() == 0; }
 
 }} // namespace yangacer::json
