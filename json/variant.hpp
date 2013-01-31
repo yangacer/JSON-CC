@@ -25,11 +25,9 @@ typedef boost::mpl::vector<
 
 // variable type
 typedef boost::make_recursive_variant_over<types>::type var_t;
-// array type
 typedef std::deque<var_t> array_t;
-// object type
 typedef std::map<std::string, var_t> object_t;
-
+typedef boost::blank null_t;
 }}
 
 namespace boost { namespace serialization 
