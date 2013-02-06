@@ -32,7 +32,7 @@ member_of::operator[](char const* member)
 }
 
 member_of&
-member_of::operator[](std::size_t offset)
+member_of::operator()(std::size_t offset)
 {
   if(v_ptr_) {
     if( 0 == v_ptr_->which() ) 

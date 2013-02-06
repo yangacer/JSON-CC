@@ -14,7 +14,7 @@ struct member_of
 {
   explicit member_of(var_t &v);
   member_of &operator[](char const* member);
-  member_of &operator[](std::size_t offset);
+  member_of &operator()(std::size_t offset);
 
   operator bool() const;
 
