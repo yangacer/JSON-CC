@@ -58,9 +58,8 @@ grammar<Iter>::grammar()
     ;
 
   array_r %= 
-    '[' >>
-    var_r >> *( ',' >> var_r ) >>
-    ']';
+    '[' >>  *(var_r % ',') >> ']'
+    ;
 
   var_r %= 
     lit("null") [ _val = boost::blank() ]
@@ -72,7 +71,7 @@ grammar<Iter>::grammar()
     ;
 
   // Accept UNICODE (no verification of any UNICODE rule)
-  string_r %= lexeme['"' >
+  string_r %= lexeme['"' >>
     *( (&lit('\\') >> unesc_char) |  (qi::byte_ - '"')  ) >> '"'];
 
 #ifdef JSON_PARSER_DEBUG_
@@ -81,16 +80,6 @@ grammar<Iter>::grammar()
   array_r.name("array");
   var_r.name("var");
   string_r.name("string");
-
-  qi::on_error<qi::fail>
-  ( object_r ,
-    std::cout<<
-      val("Error! Expecting ")<<
-      _4<<  
-      val(" here: ")<<
-      construct<std::string>(_3,_2)<<
-      std::endl
-  );
   
   debug(object_r);
   debug(pair_r);

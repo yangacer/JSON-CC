@@ -45,13 +45,14 @@ int main()
 
   // Let's see what we got.
   json::pretty_print(cout, mix);
-
   
   json::var_t const & cmix(mix);
 
   // Const version member_of
   assert (!cmbof(cmix)["error"]["wrong"] );
   assert( cmbof(cmix)["object"]["msg"] == string("default_msg") );
-
+  if( cmbof(cmix)["invalid"] || cmbof(cmix)[32124lu] ) {
+    assert(false && "Never reach here.");
+  }
   return 0;
 }

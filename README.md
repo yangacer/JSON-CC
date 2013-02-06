@@ -93,7 +93,8 @@ in your code and define a grammar of the iterator type. e.g.
 
 ##Convinent Access Method
 
-You can get a reference to any value of a deep nested object via
+You can get a reference to any value of a deep nested object via mbof() and
+cmbof(). Let's see an example first.
 
 ```C++
   #include <iostream>
@@ -124,6 +125,38 @@ You can get a reference to any value of a deep nested object via
   // result:
   // Hi there!
 ```
+
+Furthermore:
+
+```C++
+  // Do some js like test or set
+  var_t v;
+  var_t const &cv;
+  
+  // Set 
+  // XXX This creates elements only if v.is_null() is true.
+  v[0lu]["say"] = string("yo");
+
+  // Test
+  if( cmbof(cv)["not_exist"] ) {
+    assert( false && "Never reach." );
+  } 
+  
+```
+
+The mbof and its constant version, cmbof, are two macro that abbreviated from json::member_of and
+json::const_member_of, respectively. They add parentheses around original
+json::member_of and json::const_member_of such that. If you do like macro, you still can  
+do it on your own. i.e. 
+
+```C++
+  (json::memboer_of(var))["something"][123lu].string() ; // and
+  if( (json::const_member_of(c_var))["others"] ) {
+    // ...
+  }
+```
+
+See test/accessor.cpp for more examples.
 
 ##Processing of Characters 
   

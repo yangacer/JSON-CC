@@ -39,7 +39,10 @@ member_of::operator()(std::size_t offset)
       *v_ptr_ = array_t();
 
     if(ARRAY_WHICH == v_ptr_->which()) {
-      v_ptr_ = &(boost::get<array_t>(*v_ptr_)[offset]);
+      array_t &a = boost::get<array_t>(*v_ptr_);
+      if(a.size() <= offset)
+         a.resize(offset+1);
+      v_ptr_ = &(a[offset]);
     } else {
       v_ptr_ = 0;
     }
@@ -66,7 +69,9 @@ const_member_of& const_member_of::operator[](char const* member)
 {
   if(v_ptr_) {
     if(OBJECT_WHICH == v_ptr_->which()) {
-      v_ptr_ = &(boost::get<object_t>(*v_ptr_).at(member));
+      object_t const &o = boost::get<object_t>(*v_ptr_);
+      auto i = o.find(member);
+      v_ptr_ = (i != o.end()) ? &(i->second) : 0;
     } else {
       v_ptr_ = 0;
     }
@@ -78,7 +83,8 @@ const_member_of& const_member_of::operator[](std::size_t offset)
 {
   if(v_ptr_) {
     if(ARRAY_WHICH == v_ptr_->which()) {
-      v_ptr_ = &(boost::get<array_t>(*v_ptr_).at(offset));
+      array_t const &a = boost::get<array_t>(*v_ptr_);
+      v_ptr_ = (offset < a.size()) ? &(a[offset]) : 0;
     } else {
       v_ptr_ = 0;
     }
