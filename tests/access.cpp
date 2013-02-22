@@ -1,4 +1,5 @@
 #include <iostream>
+#include <boost/lexical_cast.hpp>
 #include "json.hpp"
 #include "accessor.hpp"
 
@@ -40,6 +41,12 @@ int main()
   // Test to mix.object.msg 
   mbof(mix)["object"]["msg"].test(string("error_msg"));
 
+  // Test integer assignment
+  mbof(mix)["uint"] = 4592u;
+
+  cout << (mbof(mix)["uint"].cast<boost::int64_t>()) ;
+  cout << "\n";
+
   assert( "default_msg" == 
           mbof(mix)["object"]["msg"].test(string("error_msg")));
 
@@ -54,5 +61,6 @@ int main()
   if( cmbof(cmix)["invalid"] || cmbof(cmix)[32124lu] ) {
     assert(false && "Never reach here.");
   }
+
   return 0;
 }

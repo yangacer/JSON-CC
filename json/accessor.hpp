@@ -3,8 +3,10 @@
 
 #include <string>
 #include <boost/mpl/find.hpp>
-#include "boost/noncopyable.hpp"
+#include <boost/noncopyable.hpp>
+#include <boost/variant/apply_visitor.hpp>
 #include "variant.hpp"
+#include "cast.hpp"
 
 namespace yangacer {
 namespace json {
@@ -21,6 +23,10 @@ struct member_of
   template<typename T>
   T &value() { return boost::get<T>(*v_ptr_); }
 
+  template<typename T>
+  T cast() 
+  { return boost::apply_visitor(json::cast_<T>(), *v_ptr_); }
+    
   template<typename T>
   T const &value() const { return boost::get<T>(*v_ptr_); }
 
@@ -88,6 +94,9 @@ struct const_member_of
 
   template<typename T>
   T const &value() const { return boost::get<T>(*v_ptr_); }
+
+  template<typename T>
+  T cast() const { return boost::apply_visitor(json::cast_<T>(), *v_ptr_); }
 
   var_t const&          var();
   object_t const&       object();

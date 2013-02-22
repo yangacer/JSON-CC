@@ -24,7 +24,7 @@ escaped_string<OIter>::escaped_string()
 {
   esc_char.add('\b', "\\b")('\f', "\\f")('\n', "\\n")
     ('\r', "\\r")('\t', "\\t")('\\', "\\\\")
-    ('\'', "\\\'")('\"', "\\\"")('/',"\\/")
+    ('\"', "\\\"")('/',"\\/")
     ;
   esc_str =   karma::lit("\"")
     << *(esc_char | karma::byte_)
