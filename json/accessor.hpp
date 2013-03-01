@@ -53,8 +53,7 @@ struct member_of
   object_t&       object();
   array_t&        array();
   std::string&    string();
-  unsigned int&   uint();
-  boost::int64_t& int64();
+  boost::intmax_t& intmax();
   bool is_null() const;
 private:
   var_t *v_ptr_;
@@ -88,7 +87,7 @@ struct const_member_of
 {
   explicit const_member_of(var_t const &v);
   const_member_of &operator[](char const* member);
-  const_member_of &operator[](std::size_t offset);
+  const_member_of &operator()(std::size_t offset);
 
   operator bool() const;
 
@@ -102,8 +101,7 @@ struct const_member_of
   object_t const&       object();
   array_t const&        array();
   std::string const&    string();
-  unsigned int const&   uint();
-  boost::int64_t const& int64();
+  boost::intmax_t const& intmax();
   bool is_null() const;
 private:
   var_t const *v_ptr_;

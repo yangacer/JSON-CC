@@ -1,6 +1,6 @@
 #ifndef JSON_VARIANT_HPP_
 #define JSON_VARIANT_HPP_
-
+#include <boost/cstdint.hpp>
 #include <boost/variant.hpp>
 #include <boost/mpl/vector.hpp>
 #include <deque>
@@ -15,8 +15,7 @@ using boost::get;
 typedef boost::mpl::vector<
   boost::blank,
   bool,
-  unsigned int,
-  int64_t,
+  boost::intmax_t,
   double,
   std::string,
   std::deque<boost::recursive_variant_>,

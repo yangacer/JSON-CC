@@ -20,7 +20,7 @@ int main()
     archive::text_oarchive oa(cvt);
     json::object_t obj1, obj2;
     obj1["name"] = std::string("obj1");
-    obj1["ver"] = 1u;
+    obj1["ver"] = 1l;
     obj2["name"] = std::string("obj2");
     obj2["ver"] = INT64_C(2);
     cout<<"Object1:\n";

@@ -13,7 +13,7 @@ int main()
 
   // Changes the mix variable to an object_t object and
   // insert a member "error" of value 404u
-  mbof(mix)["error"] = 404u; // OK
+  mbof(mix)["error"] = 404l; // OK
   
   // "error" is already an uint
   // Follwing access is non sense. Consequently, we
@@ -42,7 +42,7 @@ int main()
   mbof(mix)["object"]["msg"].test(string("error_msg"));
 
   // Test integer assignment
-  mbof(mix)["uint"] = 4592u;
+  mbof(mix)["int"] = 4592l;
 
   cout << (mbof(mix)["uint"].cast<boost::int64_t>()) ;
   cout << "\n";
@@ -58,7 +58,7 @@ int main()
   // Const version member_of
   assert (!cmbof(cmix)["error"]["wrong"] );
   assert( cmbof(cmix)["object"]["msg"] == string("default_msg") );
-  if( cmbof(cmix)["invalid"] || cmbof(cmix)[32124lu] ) {
+  if( cmbof(cmix)["invalid"] || cmbof(cmix)(32124) ) {
     assert(false && "Never reach here.");
   }
 

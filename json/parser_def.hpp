@@ -24,14 +24,12 @@ struct strict_real_policies
     static bool const expect_dot = true;
 };
 
-
 template<typename Iter>
 grammar<Iter>::grammar() 
 : grammar::base_type(var_r, "object")
 {
   using qi::char_;
   using qi::lit;
-  using qi::uint_;
   using qi::lexeme;
   using qi::skip;
   using qi::double_;
@@ -41,8 +39,8 @@ grammar<Iter>::grammar()
   using namespace qi::labels;
 
   qi::real_parser< double, strict_real_policies<double> > real_;
-  typedef qi::int_parser< boost::int64_t > int64_parser;
-  int64_parser int64_;
+  typedef qi::int_parser< boost::intmax_t > intmax_parser;
+  intmax_parser intmax_;
 
   unesc_char.add  
     ("\\\"", '\"')  ("\\\\", '\\') 
@@ -64,7 +62,7 @@ grammar<Iter>::grammar()
   var_r %= 
     lit("null") [ _val = boost::blank() ]
     | bool_  
-    | real_ | uint_ | int64_ 
+    | real_ | intmax_ 
     | (&lit('"') >> string_r)  
     | (&lit('{') >> object_r)  
     | (&lit('[') >> array_r )
