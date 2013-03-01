@@ -13,7 +13,7 @@ int main()
 
   // Changes the mix variable to an object_t object and
   // insert a member "error" of value 404u
-  mbof(mix)["error"] = 404l; // OK
+  mbof(mix)["error"] = boost::intmax_t(404); // OK
   
   // "error" is already an uint
   // Follwing access is non sense. Consequently, we
@@ -42,7 +42,7 @@ int main()
   mbof(mix)["object"]["msg"].test(string("error_msg"));
 
   // Test integer assignment
-  mbof(mix)["int"] = 4592l;
+  mbof(mix)["int"] = boost::intmax_t(4592);
 
   cout << (mbof(mix)["uint"].cast<boost::int64_t>()) ;
   cout << "\n";

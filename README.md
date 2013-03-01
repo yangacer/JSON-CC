@@ -222,3 +222,35 @@ before parsing. You can premodel it. e.g.
     return json::phrase_parse(beg, end, result);
   }
 ```
+##Deal with numeric type
+
+Idealy, we would like to write code like
+
+```C++
+json::var_t var;
+mbof(var)["number"] = 123;
+```
+
+Though, this results in ambiguous assignment of boost::variant since
+there are several numeric types supplied in a variant which can be
+converted to each other implicitly. For different architecture, one
+can use different workrounds. 
+
+For amd64:
+
+```C++
+mbof(var)["number"] = 123l; // read as `123 L'
+```
+For x86:
+
+```C++
+mbof(var)["number"] = 123ll; // read as `123 L L'
+```
+
+The most portable way is to use std::intmax_t or boost::intmax_t 
+provided by <cstdint> or <boost/cstdint.hpp>.
+
+```C++
+mbof(var)["number"] = intmax_t(123);
+```
+
