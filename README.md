@@ -3,7 +3,7 @@
 Following description uses yangacer::json and JSON-CC to refer this library
 interchangeably.
 
-#Qickstart
+# Qickstart
 
 1. Build and install library <p/>
 
@@ -42,9 +42,27 @@ interchangeably.
 3. Read util.\* to see how to write a visitor for reading/processing a JSON
    object.
 
-#Features
+# Tool
 
-##A C++ JSON object
+  JSON-CC contains a command line tool `jsav' that can parse and retrieve 
+  attribute values of a JSON object. e.g.
+
+```
+  $echo '{"test" : [ 0, 2, { "inner": 123 } ]}' | jsav '."test".2."inner"'
+  123
+```
+
+# Features
+
+  - A C++ JSON Object
+
+  - libjson.so
+
+  - Convinent Access Method
+
+  - Unicode Compactiable
+
+## A C++ JSON object
 
 A JSON object is modeled by std::map&lt;std::string, json::var\_t&gt;. 
 
@@ -67,7 +85,7 @@ An instance of var\_t can be one of following types
 The var\_t is actually of type boost::variant, to get familiar with it, please 
 check the [boost::variant document](http://www.boost.org/doc/libs/1_49_0/doc/html/variant/tutorial.html).
 
-##libjson.so: Pre-built grammar of frequently used iterator types
+## libjson.so: Pre-built grammar of frequently used iterator types
 
 Supplied types are std::string::const\_iterator, char const\*, and boost::spirit::istream\_iterator.
 Note that the boost::spirit::istream\_iterator is an adaptor that allow a parser to
@@ -91,7 +109,7 @@ in your code and define a grammar of the iterator type. e.g.
   json::phrase_parse(begin, end, variable);
 ```
 
-##Convinent Access Method
+## Convinent Access Method
 
 You can get a reference to any value of a deep nested object via mbof() and
 cmbof(). Let's see an example first.
@@ -158,13 +176,13 @@ do it on your own. i.e.
 
 See test/accessor.cpp for more examples.
 
-##Processing of Characters 
+## Processing of Characters 
   
   - Support ASCII and UNICODE (other than that will not work). 
 
   - Support escaped string.
 
-#JSON-CC v.s. JSON SPIRIT
+# JSON-CC v.s. JSON SPIRIT
 
 [JSON SPIRIT](http://www.codeproject.com/Articles/20027/JSON-Spirit-A-C-JSON-Parser-Generator-Implemented) 
 is a famous JSON parser that has some similar implementation with
@@ -186,9 +204,9 @@ yangacer::json.
     37        3.55          3.14        3.4
   </pre>
 
-#Tips
+# Tips
 
-##Boost parsing speed with premodel
+## Boost parsing speed with premodel
 
 If you have knowledge of what fields and what types will be constructed
 before parsing. You can premodel it. e.g.
@@ -206,7 +224,7 @@ before parsing. You can premodel it. e.g.
   // do parse here after
 ```
 
-##Read from std::istream
+## Read from std::istream
 
 ```C++
   #include "parse.hpp"
@@ -222,7 +240,7 @@ before parsing. You can premodel it. e.g.
     return json::phrase_parse(beg, end, result);
   }
 ```
-##Deal with numeric type
+## Deal with numeric type
 
 Idealy, we would like to write code like
 

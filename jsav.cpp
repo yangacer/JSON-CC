@@ -98,7 +98,7 @@ int main(int argc, char **argv)
   if(argc < 2) {
     cerr << 
       "Usage: jsav <access_method> [input_file]\n\n"
-      "   echo '{\"test\" : [123,456] }' | jsav '.\"test\".2'\n"
+      "   echo '{\"test\" : [\"acer\", 123, 456] }' | jsav '.\"test\".2'\n"
       "   456\n"
       ;
 

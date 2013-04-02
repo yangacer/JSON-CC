@@ -31,6 +31,7 @@ option ( JSON_INSTALL_RUNTIME ON )
 option ( JSON_INSTALL_HEADERS OFF )
 
 if( JSON_INSTALL_RUNTIME )
+  install ( TARGETS jsav DESTINATION bin )
   install ( TARGETS json DESTINATION lib )
 endif ()
 if( JSON_INSTALL_HEADERS )
