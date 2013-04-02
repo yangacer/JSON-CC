@@ -1,12 +1,11 @@
 cmake_minimum_required (VERSION 2.8)
 project (json)
 
-find_package ( Boost COMPONENTS
-               serialization)
+find_package ( Boost )
 
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
-  link_directories (${Boost_LIBRARY_DIRS} )
+#link_directories (${Boost_LIBRARY_DIRS} )
 endif()
 
 include ( rpath.cmake )
@@ -20,6 +19,9 @@ include_directories ( json )
 
 add_library ( json SHARED parser_inst.cpp util.cpp print.cpp accessor.cpp) #filter.cpp)
 target_link_libraries ( json ${Boost_LIBRARIES} )
+
+add_executable ( jsav jsav.cpp )
+target_link_libraries ( jsav json )
 
 ENABLE_TESTING()
 
