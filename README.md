@@ -136,10 +136,13 @@ cmbof(). Let's see an example first.
   json::var_t variable;
   json::phrase_parse(beg, end, variable);
   // Note we use operator() as subscript method of arrays
-  std::cout << 
-    json::member_of(variable)["object_1"]["object_2"]["array"](1).get<std::string>() << 
-    "\n";
-
+  try {
+    std::cout << 
+      (json::member_of(variable))["object_1"]["object_2"]["array"](1).string() << 
+      "\n";
+  } catch ( boost::bad_get &e) {
+    std::cerr << e.what() << "\n";
+  }
   // result:
   // Hi there!
 ```
