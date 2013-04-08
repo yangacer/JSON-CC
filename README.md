@@ -164,7 +164,7 @@ Furthermore:
 
 The mbof and its constant version, cmbof, are two macro that abbreviated from json::member_of and
 json::const_member_of, respectively. They add parentheses around original
-json::member_of and json::const_member_of. If you do like macro, you still can  
+json::member_of and json::const_member_of. If you do not like macro, you still can  
 do it on your own. i.e. 
 
 ```C++
