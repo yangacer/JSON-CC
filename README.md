@@ -266,7 +266,7 @@ mbof(var)["number"] = 123ll; // read as `123 L L'
 ```
 
 The most portable way is to use std::intmax_t or boost::intmax_t 
-provided by <cstdint> or <boost/cstdint.hpp>.
+provided by \<cstdint> or \<boost/cstdint.hpp>.
 
 ```C++
 mbof(var)["number"] = intmax_t(123);
