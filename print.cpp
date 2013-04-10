@@ -13,9 +13,9 @@ template <typename OutputIterator>
 struct escaped_string
 : karma::grammar<OutputIterator, std::string()>
 {
-    escaped_string();
-    karma::rule<OutputIterator, std::string()> esc_str;
-    karma::symbols<char, char const*> esc_char;
+  escaped_string();
+  karma::rule<OutputIterator, std::string()> esc_str;
+  karma::symbols<char, char const*> esc_char;
 };
 
 template <typename OIter>
@@ -35,7 +35,7 @@ escaped_string<OIter>::escaped_string()
 template <typename Iter>
 void generate_escaped_string(Iter &sink, std::string const& str)
 {
-  static escaped_string<boost::spirit::ostream_iterator> str_gen;
+  escaped_string<boost::spirit::ostream_iterator> str_gen;
   karma::generate(sink, str_gen, str);
 }
 
@@ -59,8 +59,12 @@ void print::operator()(bool const b) const
 
 void print::operator()(std::string const& s) const
 { 
-  boost::spirit::ostream_iterator sink(*os_);
-  generate_escaped_string(sink, s);
+  if( noescape == mode_ ) {
+    (*os_) << s;    
+  } else {
+    boost::spirit::ostream_iterator sink(*os_);
+    generate_escaped_string(sink, s);
+  }
 }
 
 void print::operator()(array_t const &v) const

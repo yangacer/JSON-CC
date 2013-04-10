@@ -97,25 +97,33 @@ int main(int argc, char **argv)
 
   if(argc < 2) {
     cerr << 
-      "Usage: jsav <access_method> [input_file]\n\n"
-      "   echo '{\"test\" : [\"acer\", 123, 456] }' | jsav '.\"test\".2'\n"
-      "   456\n"
+      "Usage: jsav [-n] <access_method> [input_file]\n\n"
+      "   -n Do not escape string.\n"
+      "   Example:\n"
+      "     $ echo '{\"test\" : [\"acer\", 123, 456] }' | jsav '.\"test\".2'\n"
+      "     456\n"
       ;
 
     exit(1);
   }
-  
-  if(argc > 2) {
-    ifstream fin(argv[2], ios::in | ios::binary);
-    cin.rdbuf(fin.rdbuf());
+  argc--; argv++;
+
+  json::print::mode_t mode = json::print::pretty;
+  if(0 == strcmp("-n", argv[0])) {
+    mode = json::print::noescape;
+    argc--; argv++;
   }
   // parse access_method
   vector<json::attribute> access_method;
   {
-    char const *beg(argv[1]), *end(beg + strlen(argv[1]));
+    char const *beg(argv[0]), *end(beg + strlen(argv[0]));
     if(!json::parse_attribute(beg, end, access_method)) {
-      exit(1);
+      exit(2);
     }
+  }
+  if(argc > 1) {
+    ifstream fin(argv[1], ios::in | ios::binary);
+    cin.rdbuf(fin.rdbuf());
   }
   // read input
   string buf(1024, 0);
@@ -131,7 +139,7 @@ int main(int argc, char **argv)
   {
     auto beg(buf.begin()), end(buf.end());
     if(!json::phrase_parse(beg, end, var)) {
-      exit(1);
+      exit(3);
     }
   }
   json::const_member_of cm(var);
@@ -139,9 +147,9 @@ int main(int argc, char **argv)
   for(auto i = access_method.begin(); i != access_method.end();++i)
     eam(*i);
   
-  if(!cm) exit(1);
+  if(!cm) exit(4);
 
-  json::pretty_print(cout, cm.var());
+  json::pretty_print(cout, cm.var(), mode);
   
   cout << "\n";
   return 0;

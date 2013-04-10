@@ -34,7 +34,7 @@ template<typename Iter>
 bool phrase_parse(Iter &beg, Iter &end, var_t &v)
 {
   namespace qi = boost::spirit::qi;
-  static grammar<Iter> parser;
+  grammar<Iter> parser;
   return qi::phrase_parse(beg, end, parser, qi::space, v);
 }
 
@@ -42,7 +42,7 @@ template<typename Iter>
 bool parse(Iter &beg, Iter &end, var_t &v)
 {
   namespace qi = boost::spirit::qi;
-  static grammar<Iter> parser;
+  grammar<Iter> parser;
   return qi::parse(beg, end, parser, qi::space, v);
 }
 

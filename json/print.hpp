@@ -10,7 +10,7 @@ namespace json {
 struct print
 : boost::static_visitor<>
 {
-  enum mode_t { compact=0, pretty };
+  enum mode_t { compact=0, pretty, noescape };
 
   print(std::ostream &os, mode_t mode=pretty);
 
