@@ -70,7 +70,7 @@ struct evaluate_access_method
   void operator()(std::string const &str) const
   {
     if(cm_)
-      cm_[str.c_str()];
+      cm_[str];
   }
   
   void operator()(std::size_t const &size) const
@@ -97,8 +97,9 @@ int main(int argc, char **argv)
 
   if(argc < 2) {
     cerr << 
-      "Usage: jsav [-n] <access_method> [input_file]\n\n"
+      "Usage: jsav [-n|-e] <access_method> [input_file]\n\n"
       "   -n Do not escape string.\n"
+      "   -e Ecsape all arguments as an array of strings.\n"
       "   Example:\n"
       "     $ echo '{\"test\" : [\"acer\", 123, 456] }' | jsav '.\"test\".2'\n"
       "     456\n"
@@ -112,6 +113,14 @@ int main(int argc, char **argv)
   if(0 == strcmp("-n", argv[0])) {
     mode = json::print::noescape;
     argc--; argv++;
+  } else if(0 == strcmp("-e", argv[0])) {
+    json::array_t array;
+    for(int i =2; i < argc; ++i) {
+      array.push_back(string(argv[i]));
+    }
+    json::pretty_print(cout, array);
+    cout << "\n";
+    return 0;
   }
   // parse access_method
   vector<json::attribute> access_method;
