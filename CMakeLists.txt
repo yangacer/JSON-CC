@@ -10,6 +10,7 @@ endif()
 
 include ( rpath.cmake )
 include ( use_c++11.cmake )
+include ( disable_useless_vc_warning.cmake )
 
 if(CMAKE_COMPILER_IS_GNUCXX)
   set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-conversion-null")
@@ -17,8 +18,14 @@ endif()
 
 include_directories ( json )
 
-add_library ( json SHARED parser_inst.cpp util.cpp print.cpp accessor.cpp) #filter.cpp)
-target_link_libraries ( json ${Boost_LIBRARIES} )
+set ( LIB_TYPE SHARED )
+if(WIN32)
+  set ( LIB_TYPE STATIC )
+endif()
+
+message ( "lib_type: ${LIB_TYPE}" )
+
+add_library ( json ${LIB_TYPE} parser_inst.cpp util.cpp print.cpp accessor.cpp) #filter.cpp)
 
 add_executable ( jsav jsav.cpp )
 target_link_libraries ( jsav json )
