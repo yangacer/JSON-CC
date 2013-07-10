@@ -70,7 +70,7 @@ struct evaluate_access_method
   void operator()(std::string const &str) const
   {
     if(cm_)
-      cm_[str];
+      cm_[str.c_str()];
   }
   
   void operator()(std::size_t const &size) const
@@ -115,7 +115,7 @@ int main(int argc, char **argv)
     argc--; argv++;
   } else if(0 == strcmp("-e", argv[0])) {
     json::array_t array;
-    for(int i =2; i < argc; ++i) {
+    for(int i =1; i < argc; ++i) {
       array.push_back(string(argv[i]));
     }
     json::pretty_print(cout, array);
