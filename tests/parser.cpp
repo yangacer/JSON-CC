@@ -36,10 +36,14 @@ int main(int argc, char** argv)
     cout << "Compact print:\n";
     json::pretty_print(cout, v, json::print::compact);
     cout << "\n";
-    cout << "Access to object.green:\n";
-    cout << json::member_of(v)["object"]["green"].value<std::string>() << "\n";
-    cout << "Access to object.array[2]:\n";
-    cout << json::member_of(v)["object"]["array"](2).value<std::string>() << "\n";
+    try {
+      cout << "Access to object.green:\n";
+      cout << json::member_of(v)["object"]["green"].value<std::string>() << "\n";
+      cout << "Access to object.array[2]:\n";
+      cout << json::member_of(v)["object"]["array"](2).value<std::string>() << "\n";
+    } catch ( boost::bad_get &) {
+      // it's ok.
+    }
   }
   return 0;
 }

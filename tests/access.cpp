@@ -28,7 +28,7 @@ int main()
     // Force to get a string from an uint
     // will throw exception
     mbof(mix)["error"].string(); // Throw
-  } catch(boost::bad_get &e) {
+  } catch(boost::bad_get &) {
     catched = true;  
   }
   assert(catched);
