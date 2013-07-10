@@ -16,14 +16,16 @@ typedef boost::variant<
   std::size_t
   > attribute;
 
+typedef std::vector<attribute> attribute_list;
+
 template<typename Iterator = std::string::const_iterator>
 struct jsav_grammar
 : boost::spirit::qi::grammar<
-  Iterator, std::vector<attribute>(), space_type>
+  Iterator, attribute_list(), space_type>
 {
   typedef uint_parser<std::size_t> pos_parser_t;
   typedef boost::spirit::qi::grammar<
-      Iterator, std::vector<attribute>(), space_type
+      Iterator, attribute_list(), space_type
     > super_t;
 
   jsav_grammar()
@@ -48,13 +50,13 @@ struct jsav_grammar
   }
   
   rule<Iterator, std::string(), space_type> string_r;
-  rule<Iterator, attribute(), space_type> attribute_r;
-  rule<Iterator, std::vector<attribute>(), space_type> list_r;
+  rule<Iterator, yangacer::json::attribute(), space_type> attribute_r;
+  rule<Iterator, attribute_list(), space_type> list_r;
   symbols<char const, char const> unesc_char;
 };
 
 template<typename Iter>
-bool parse_attribute(Iter &beg, Iter &end, std::vector<attribute> &a)
+bool parse_attribute(Iter &beg, Iter &end, attribute_list &a)
 {
   jsav_grammar<Iter> parser;
   return phrase_parse(beg, end, parser, space, a);
@@ -136,13 +138,13 @@ int main(int argc, char **argv)
   }
   // read input
   string buf(1024, 0);
-  size_t total=0;
+  std::streamsize total=0;
   while(!cin.eof()) {
-    cin.read(&buf[total], 1024);
+    cin.read(&buf[(unsigned int)total], 1024);
     total += cin.gcount();
     buf.resize(buf.size() << 1);
   }
-  buf.resize(total);
+  buf.resize((unsigned int)total);
   // parse input
   json::var_t var;
   {
