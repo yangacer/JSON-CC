@@ -1,6 +1,7 @@
 #ifndef JSON_PRINT_HPP_
 #define JSON_PRINT_HPP_
 
+#include <ostream>
 #include "variant.hpp"
 #include <boost/variant/static_visitor.hpp>
 
