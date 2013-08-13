@@ -1,5 +1,12 @@
 #include "accessor.hpp"
 
+#ifdef JSON_ENABLE_ACCESS_TRACKING
+#include <iostream>
+#define JSON_ACCESS_TRACKING(X) std::cerr << this << " ." << X << "\n";
+#else
+#define JSON_ACCESS_TRACKING(X) {}
+#endif
+
 namespace yangacer {
 namespace json {
 
@@ -18,6 +25,7 @@ member_of::operator bool() const
 member_of& 
 member_of::operator[](char const* member)
 {
+  JSON_ACCESS_TRACKING(member);
   if(v_ptr_) {
     if( 0 == v_ptr_->which() ) 
       *v_ptr_ = object_t();
@@ -34,6 +42,7 @@ member_of::operator[](char const* member)
 member_of&
 member_of::operator()(std::size_t offset)
 {
+  JSON_ACCESS_TRACKING(offset);
   if(v_ptr_) {
     if( 0 == v_ptr_->which() ) 
       *v_ptr_ = array_t();
@@ -65,6 +74,7 @@ const_member_of::const_member_of(var_t const &v)
 
 const_member_of& const_member_of::operator[](char const* member)
 {
+  JSON_ACCESS_TRACKING(member);
   if(v_ptr_) {
     if(OBJECT_WHICH == v_ptr_->which()) {
       object_t const &o = boost::get<object_t>(*v_ptr_);
@@ -79,6 +89,7 @@ const_member_of& const_member_of::operator[](char const* member)
 
 const_member_of& const_member_of::operator()(std::size_t offset)
 {
+  JSON_ACCESS_TRACKING(offset);
   if(v_ptr_) {
     if(ARRAY_WHICH == v_ptr_->which()) {
       array_t const &a = boost::get<array_t>(*v_ptr_);
