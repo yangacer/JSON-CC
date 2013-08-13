@@ -147,6 +147,27 @@ cmbof(). Let's see an example first.
   // Hi there!
 ```
 
+The accessing method use boost::get internally, hence throw boost::bad_get
+exception when types do not match. To ease tracking bugs, one can define 
+```JSON_ENABLE_ACCESS_TRACKING``` in compile time. Once the macro is defined,
+all access to json variant will be output to std::cerr. e.g.
+
+```
+Variable addr  Attribute name
+-----------------------------
+0x7fffd5e72bd0 .segment_map
+0x7fffd5e72be0 .count
+0x7fffd5e72bf0 .size
+0x7fffd5e72bd0 .segment_map
+0x7fffd5e72be0 .count
+0x7fffd5e72be0 .count
+0x7fffd5e72bf0 .size
+0x7fffd5e72bd0 .segment_map
+0x7fffd5e72be0 .count
+0x7fffd5e72be0 .count
+0x7fffd5e72bf0 .size
+```
+
 Furthermore:
 
 ```C++
