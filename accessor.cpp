@@ -39,6 +39,12 @@ member_of::operator[](char const* member)
   return *this;
 }
 
+member_of& 
+member_of::operator[](std::string const &member)
+{
+  return this->operator[](member.c_str());
+}
+
 member_of&
 member_of::operator()(std::size_t offset)
 {
@@ -85,6 +91,11 @@ const_member_of& const_member_of::operator[](char const* member)
     }
   }
   return *this;
+}
+
+const_member_of& const_member_of::operator[](std::string const &member)
+{
+  return this->operator[](member.c_str());  
 }
 
 const_member_of& const_member_of::operator()(std::size_t offset)

@@ -44,11 +44,19 @@ int main()
   // Test integer assignment
   mbof(mix)["int"] = boost::intmax_t(4592);
 
-  cout << (mbof(mix)["uint"].cast<boost::int64_t>()) ;
+  cout << (mbof(mix)["int"].cast<boost::int64_t>()) ;
   cout << "\n";
 
   assert( "default_msg" == 
           mbof(mix)["object"]["msg"].test(string("error_msg")));
+
+  // Test std::string as attribute name
+  string out_attrib = "outter",
+         in_attrib = "inner";
+  mbof(mix)[out_attrib][in_attrib] = string("value");
+
+  assert( "value" == 
+          mbof(mix)[out_attrib][in_attrib].string());
 
   // Let's see what we got.
   json::pretty_print(cout, mix);
