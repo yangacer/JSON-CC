@@ -68,8 +68,8 @@ member_of::operator()(std::size_t offset)
 var_t&          member_of::var()    { return *v_ptr_; }
 object_t&       member_of::object() { return value<object_t>(); }
 array_t&        member_of::array()  { return value<array_t>(); }
-std::string&    member_of::string() { return value<std::string>(); };
-boost::intmax_t& member_of::intmax()  { return value<boost::intmax_t>(); };
+std::string&    member_of::string() { return value<std::string>(); }
+boost::intmax_t& member_of::intmax()  { return value<boost::intmax_t>(); }
 bool member_of::is_null() const { return 0 == v_ptr_ || v_ptr_->which() == 0; }
 
 // ---- const_member_of impl ----
@@ -119,8 +119,8 @@ const_member_of::operator bool() const
 var_t const&          const_member_of::var()    { return *v_ptr_; }
 object_t const&       const_member_of::object() { return value<object_t>(); }
 array_t const&        const_member_of::array()  { return value<array_t>(); }
-std::string const&    const_member_of::string() { return value<std::string>(); };
-boost::intmax_t const& const_member_of::intmax()  { return value<boost::intmax_t>(); };
+std::string const&    const_member_of::string() { return value<std::string>(); }
+boost::intmax_t const& const_member_of::intmax()  { return value<boost::intmax_t>(); }
 bool const_member_of::is_null() const { return 0 == v_ptr_ || v_ptr_->which() == 0; }
 
 }} // namespace yangacer::json
