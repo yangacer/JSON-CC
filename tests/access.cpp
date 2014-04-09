@@ -14,12 +14,12 @@ int main()
   // Changes the mix variable to an object_t object and
   // insert a member "error" of value 404u
   mbof(mix)["error"] = boost::intmax_t(404); // OK
-  
+
   // "error" is already an uint
   // Follwing access is non sense. Consequently, we
   // got return value 'false'
   assert( !mbof(mix)["error"]["wrong"] ); 
-  
+
   // Assign to the undefeined field is also
   // equavalent to nop
   mbof(mix)["error"]["wrong"] = string("acer"); 
@@ -60,7 +60,7 @@ int main()
 
   // Let's see what we got.
   json::pretty_print(cout, mix);
-  
+
   json::var_t const & cmix(mix);
 
   // Const version member_of
