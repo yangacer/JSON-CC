@@ -130,6 +130,9 @@ bool operator < (T const &lhs, member_of const &rhs)
   return rhs ? lhs < rhs.value<type>() : false;
 }
 
+bool operator<(char const *lhs, member_of const &rhs);
+bool operator<(member_of const &lhs, char const *rhs);
+
 // --
 struct const_member_of 
   : private boost::noncopyable
@@ -187,6 +190,9 @@ bool operator < (T const &lhs, const_member_of const &rhs)
   typedef typename safe_convert<T>::type type;
   return rhs ? lhs < rhs.value<type>() : false;
 }
+
+bool operator<(char const *lhs, const_member_of const &rhs);
+bool operator<(const_member_of const &lhs, char const *rhs);
 
 }} // namespace yangacer::json
 // brief alias

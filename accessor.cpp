@@ -82,6 +82,16 @@ bool operator==(member_of const &lhs, char const *rhs)
   return const_cast<member_of&>(lhs).string() == rhs;
 }
 
+bool operator<(char const *lhs, member_of const &rhs)
+{
+  return lhs < const_cast<member_of&>(rhs).string();
+}
+
+bool operator<(member_of const &lhs, char const *rhs)
+{
+  return const_cast<member_of&>(lhs).string() < rhs;
+}
+
 var_t&          member_of::var()    { return *v_ptr_; }
 object_t&       member_of::object() { return value<object_t>(); }
 array_t&        member_of::array()  { return value<array_t>(); }
@@ -142,6 +152,16 @@ bool operator==(char const *lhs, const_member_of const &rhs)
 bool operator==(const_member_of const &lhs, char const *rhs)
 {
   return lhs.string() == rhs;
+}
+
+bool operator<(char const *lhs, const_member_of const &rhs)
+{
+  return lhs < rhs.string();
+}
+
+bool operator<(const_member_of const &lhs, char const *rhs)
+{
+  return lhs.string() < rhs;
 }
 
 var_t const&          const_member_of::var()     const { return *v_ptr_; }

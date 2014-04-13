@@ -14,7 +14,7 @@ BOOST_AUTO_TEST_CASE( assign_and_compare_literal_string )
   char const *literal = "literal string testing";
   mbof(v)["text"] = "literal string testing";
   BOOST_CHECK(cmbof(v)["text"] == literal);
-  //BOOST_CHECK(cmbof(v)["text"] < "literal string testing BIG");
+  BOOST_CHECK(cmbof(v)["text"] < "literal string testing BIG");
 }
 
 BOOST_AUTO_TEST_CASE( assign_and_compare_literal_integer )
@@ -53,6 +53,8 @@ BOOST_AUTO_TEST_CASE( assign_and_compare_std_string )
   std::string s = "std::string testing";
   mbof(v)["text"] = s;
   BOOST_CHECK(cmbof(v)["text"] == s);
+  s += "suffix";
+  BOOST_CHECK(cmbof(v)["text"] < s);
 }
 
 BOOST_AUTO_TEST_CASE( assign_and_compare_object )
